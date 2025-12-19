@@ -380,80 +380,69 @@ async function saveProjects() {
     saveBtn.disabled = false;
 }
 
-// 保存作品（已改造）
+// 保存作品（已改造 - 修复了async/await问题）
 async function saveWorks() {
     const saveBtn = document.querySelector('button[onclick="saveWorks()"]');
     const originalText = saveBtn.textContent;
     saveBtn.textContent = '保存中...';
     saveBtn.disabled = true;
     
-    const workItems = document.querySelectorAll('#works-list .works-item');
-    const worksData = [];
-    let itemsProcessed = 0;
-    
-    // 如果没有作品项，直接保存空数组
-    if (workItems.length === 0) {
+    try {
+        const workItems = document.querySelectorAll('#works-list .works-item');
+        const worksData = [];
+        
+        // 使用for...of循环处理异步操作
+        for (const item of workItems) {
+            const title = item.querySelector('input[name="work-title"]').value;
+            const desc = item.querySelector('textarea[name="work-desc"]').value;
+            const imgFile = item.querySelector('input[name="work-img"]').files[0];
+            
+            if (!title) continue; // 跳过没有标题的项
+            
+            const workData = { title, desc };
+            
+            // 处理图片文件
+            if (imgFile instanceof File) {
+                const imgDataUrl = await new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = (event) => resolve(event.target.result);
+                    reader.onerror = (error) => reject(error);
+                    reader.readAsDataURL(imgFile);
+                });
+                workData.img = imgDataUrl;
+            } else {
+                workData.img = '';
+            }
+            
+            worksData.push(workData);
+        }
+        
+        // 发送到API
         const result = await saveDataToAPI('works', worksData, '作品保存成功！');
         alert(result.message);
+        
+    } catch (error) {
+        console.error('保存作品失败:', error);
+        alert('❌ 保存作品时发生错误，数据已保存到本地。');
+        
+        // 降级方案：保存到本地
+        const workItems = document.querySelectorAll('#works-list .works-item');
+        const worksData = [];
+        
+        workItems.forEach(item => {
+            const title = item.querySelector('input[name="work-title"]').value;
+            const desc = item.querySelector('textarea[name="work-desc"]').value;
+            
+            if (title) {
+                worksData.push({ title, desc, img: '' });
+            }
+        });
+        
+        localStorage.setItem('works', JSON.stringify(worksData));
+    } finally {
         saveBtn.textContent = originalText;
         saveBtn.disabled = false;
-        return;
     }
-    
-    workItems.forEach((item, index) => {
-        const title = item.querySelector('input[name="work-title"]').value;
-        const desc = item.querySelector('textarea[name="work-desc"]').value;
-        const imgFile = item.querySelector('input[name="work-img"]').files[0];
-        
-        if (title) {
-            const workData = {
-                title,
-                desc
-            };
-            
-            if (imgFile instanceof File) {
-                const reader = new FileReader();
-                reader.onload = async (event) => {
-                    workData.img = event.target.result;
-                    worksData[index] = workData;
-                    itemsProcessed++;
-                    
-                    if (itemsProcessed === workItems.length) {
-                        // 过滤掉空项
-                        const validWorks = worksData.filter(item => item);
-                        const result = await saveDataToAPI('works', validWorks, '作品保存成功！');
-                        alert(result.message);
-                        saveBtn.textContent = originalText;
-                        saveBtn.disabled = false;
-                    }
-                };
-                reader.readAsDataURL(imgFile);
-            } else {
-                // 如果没有选择新图片，检查是否有原有图片
-                workData.img = '';
-                worksData[index] = workData;
-                itemsProcessed++;
-                
-                if (itemsProcessed === workItems.length) {
-                    const validWorks = worksData.filter(item => item);
-                    const result = await saveDataToAPI('works', validWorks, '作品保存成功！');
-                    alert(result.message);
-                    saveBtn.textContent = originalText;
-                    saveBtn.disabled = false;
-                }
-            }
-        } else {
-            itemsProcessed++;
-            
-            if (itemsProcessed === workItems.length) {
-                const validWorks = worksData.filter(item => item);
-                const result = await saveDataToAPI('works', validWorks, '作品保存成功！');
-                alert(result.message);
-                saveBtn.textContent = originalText;
-                saveBtn.disabled = false;
-            }
-        }
-    });
 }
 
 // ==================== 页面加载时恢复数据 ====================
