@@ -2,7 +2,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-const PORT = 8000;
+const PORT = process.env.PORT || 8000;
 const PUBLIC_DIR = './';
 
 // MIME类型映射
@@ -53,5 +53,4 @@ const server = http.createServer((req, res) => {
 // 启动服务器
 server.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}/`);
-    console.log(`Press Ctrl+C to stop the server`);
 });
