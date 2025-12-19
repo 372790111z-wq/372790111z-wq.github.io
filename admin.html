@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>后台管理</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <div class="admin-container">
+        <h1>个人网站后台管理</h1>
+        
+        <!-- 导航标签 -->
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="basic">基本信息</button>
+            <button class="tab-btn" data-tab="education">教育经历</button>
+            <button class="tab-btn" data-tab="skills">掌握技能</button>
+            <button class="tab-btn" data-tab="work">工作经历</button>
+            <button class="tab-btn" data-tab="projects">项目经历</button>
+            <button class="tab-btn" data-tab="works">作品展示</button>
+        </div>
+        
+        <!-- 表单内容 -->
+        <div class="tab-content">
+            <!-- 基本信息表单 -->
+            <div id="basic" class="form-panel active">
+                <h2>基本信息</h2>
+                <form id="basic-form" class="admin-form">
+                    <div class="form-group">
+                        <label for="name">姓名</label>
+                        <input type="text" id="name" name="name" placeholder="请输入姓名">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">电话</label>
+                        <input type="tel" id="phone" name="phone" placeholder="请输入电话">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">邮箱</label>
+                        <input type="email" id="email" name="email" placeholder="请输入邮箱">
+                    </div>
+                    <div class="form-group">
+                        <label for="avatar">头像</label>
+                        <input type="file" id="avatar" name="avatar" accept="image/*">
+                    </div>
+                    <button type="submit" class="submit-btn">保存基本信息</button>
+                </form>
+            </div>
+            
+            <!-- 教育经历表单 -->
+            <div id="education" class="form-panel">
+                <h2>教育经历</h2>
+                <button class="add-btn" onclick="addEducationItem()">添加教育经历</button>
+                <div id="education-list" class="item-list">
+                    <div class="education-item form-item">
+                        <div class="form-group">
+                            <label for="edu-degree-0">学位</label>
+                            <input type="text" name="edu-degree" placeholder="本科 - 计算机科学与技术">
+                        </div>
+                        <div class="form-group">
+                            <label for="edu-school-0">学校</label>
+                            <input type="text" name="edu-school" placeholder="北京大学">
+                        </div>
+                        <div class="form-group">
+                            <label for="edu-time-0">时间</label>
+                            <input type="text" name="edu-time" placeholder="2018.09 - 2022.06">
+                        </div>
+                        <div class="form-group">
+                            <label for="edu-desc-0">描述</label>
+                            <textarea name="edu-desc" rows="3" placeholder="主修课程：数据结构、算法设计..."></textarea>
+                        </div>
+                        <button class="remove-btn" onclick="removeItem(this)">删除</button>
+                    </div>
+                </div>
+                <button type="submit" class="submit-btn" onclick="saveEducation()">保存教育经历</button>
+            </div>
+            
+            <!-- 掌握技能表单 -->
+            <div id="skills" class="form-panel">
+                <h2>掌握技能</h2>
+                <button class="add-btn" onclick="addSkillItem()">添加技能</button>
+                <div id="skills-list" class="item-list">
+                    <div class="skill-item form-item">
+                        <div class="form-group">
+                            <label for="skill-name-0">技能名称</label>
+                            <input type="text" name="skill-name" placeholder="HTML/CSS">
+                        </div>
+                        <div class="form-group">
+                            <label for="skill-level-0">熟练度（0-10）</label>
+                            <input type="number" name="skill-level" min="0" max="10" step="0.5" placeholder="9">
+                        </div>
+                        <button class="remove-btn" onclick="removeItem(this)">删除</button>
+                    </div>
+                </div>
+                <button type="submit" class="submit-btn" onclick="saveSkills()">保存技能</button>
+            </div>
+            
+            <!-- 工作经历表单 -->
+            <div id="work" class="form-panel">
+                <h2>工作经历</h2>
+                <button class="add-btn" onclick="addWorkItem()">添加工作经历</button>
+                <div id="work-list" class="item-list">
+                    <div class="work-item form-item">
+                        <div class="form-group">
+                            <label for="work-position-0">职位</label>
+                            <input type="text" name="work-position" placeholder="前端开发工程师">
+                        </div>
+                        <div class="form-group">
+                            <label for="work-company-0">公司</label>
+                            <input type="text" name="work-company" placeholder="ABC科技有限公司">
+                        </div>
+                        <div class="form-group">
+                            <label for="work-time-0">时间</label>
+                            <input type="text" name="work-time" placeholder="2022.07 - 至今">
+                        </div>
+                        <div class="form-group">
+                            <label for="work-desc-0">描述</label>
+                            <textarea name="work-desc" rows="3" placeholder="负责公司官网的前端开发和维护..."></textarea>
+                        </div>
+                        <button class="remove-btn" onclick="removeItem(this)">删除</button>
+                    </div>
+                </div>
+                <button type="submit" class="submit-btn" onclick="saveWork()">保存工作经历</button>
+            </div>
+            
+            <!-- 项目经历表单 -->
+            <div id="projects" class="form-panel">
+                <h2>项目经历</h2>
+                <button class="add-btn" onclick="addProjectItem()">添加项目经历</button>
+                <div id="projects-list" class="item-list">
+                    <div class="project-item form-item">
+                        <div class="form-group">
+                            <label for="project-name-0">项目名称</label>
+                            <input type="text" name="project-name" placeholder="电商平台前端重构">
+                        </div>
+                        <div class="form-group">
+                            <label for="project-time-0">时间</label>
+                            <input type="text" name="project-time" placeholder="2023.01 - 2023.06">
+                        </div>
+                        <div class="form-group">
+                            <label for="project-desc-0">项目描述</label>
+                            <textarea name="project-desc" rows="3" placeholder="使用React和Redux重构了公司电商平台的前端部分..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="project-tech-0">技术栈</label>
+                            <input type="text" name="project-tech" placeholder="React、Redux、React Router、Axios、Sass">
+                        </div>
+                        <button class="remove-btn" onclick="removeItem(this)">删除</button>
+                    </div>
+                </div>
+                <button type="submit" class="submit-btn" onclick="saveProjects()">保存项目经历</button>
+            </div>
+            
+            <!-- 作品展示表单 -->
+            <div id="works" class="form-panel">
+                <h2>作品展示</h2>
+                <button class="add-btn" onclick="addWorksItem()">添加作品</button>
+                <div id="works-list" class="item-list">
+                    <div class="works-item form-item">
+                        <div class="form-group">
+                            <label for="work-title-0">作品标题</label>
+                            <input type="text" name="work-title" placeholder="作品1">
+                        </div>
+                        <div class="form-group">
+                            <label for="work-desc-0">作品描述</label>
+                            <textarea name="work-desc" rows="3" placeholder="请输入作品描述"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="work-img-0">作品图片</label>
+                            <input type="file" name="work-img" accept="image/*">
+                        </div>
+                        <button class="remove-btn" onclick="removeItem(this)">删除</button>
+                    </div>
+                </div>
+                <button type="submit" class="submit-btn" onclick="saveWorks()">保存作品</button>
+            </div>
+        </div>
+        
+        <!-- 返回网站按钮 -->
+        <a href="index.html" class="back-btn">返回个人网站</a>
+    </div>
+    
+    <script src="admin.js"></script>
+</body>
+</html>
