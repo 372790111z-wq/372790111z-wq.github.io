@@ -1,3 +1,8 @@
+// ==================== API 配置（必须添加） ====================
+const API_BASE_URL = 'https://372790111z-wq-github-io.vercel.app';
+const API_DATA_URL = `${API_BASE_URL}/api/data`;
+// ==================== 结束配置 ====================
+
 // 侧边栏导航交互
 let navItems, sections;
 
@@ -99,17 +104,87 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     });
     
-    // 从localStorage加载数据并渲染页面
-    loadBasicInfo();
-    loadEducation();
-    loadSkills();
-    loadWork();
-    loadProjects();
-    loadWorks();
+    // 从API加载数据并渲染页面
+    loadAllDataFromAPI();
 });
 
-// 加载基本信息
-function loadBasicInfo() {
+// ==================== 从API加载数据的核心函数 ====================
+
+// 从API加载所有数据
+async function loadAllDataFromAPI() {
+    console.log('开始从API加载数据...');
+    
+    try {
+        // 尝试从API获取所有数据
+        const response = await fetch(API_DATA_URL);
+        if (!response.ok) {
+            throw new Error(`API请求失败: ${response.status}`);
+        }
+        
+        const allData = await response.json();
+        console.log('API数据加载成功:', Object.keys(allData));
+        
+        // 依次渲染各部分数据
+        loadBasicInfo(allData.basicInfo);
+        loadEducation(allData.education);
+        loadSkills(allData.skills);
+        loadWork(allData.work);
+        loadProjects(allData.projects);
+        loadWorks(allData.works);
+        
+        // 触发技能条动画
+        setTimeout(animateSkillBars, 300);
+        
+    } catch (error) {
+        console.warn('从API加载数据失败，降级到本地存储:', error);
+        // 降级方案：从本地存储加载
+        loadAllDataFromLocalStorage();
+    }
+}
+
+// 降级方案：从本地存储加载所有数据
+function loadAllDataFromLocalStorage() {
+    console.log('从本地存储加载数据...');
+    
+    loadBasicInfoFromLocal();
+    loadEducationFromLocal();
+    loadSkillsFromLocal();
+    loadWorkFromLocal();
+    loadProjectsFromLocal();
+    loadWorksFromLocal();
+    
+    // 触发技能条动画
+    setTimeout(animateSkillBars, 300);
+}
+
+// ==================== 各部分数据渲染函数（已改造） ====================
+
+// 加载基本信息（优先使用API数据，失败则用本地）
+function loadBasicInfo(apiData = null) {
+    let data = apiData;
+    
+    // 如果没有API数据，尝试从本地获取
+    if (!data || Object.keys(data).length === 0) {
+        const localData = localStorage.getItem('basicInfo');
+        if (localData) {
+            data = JSON.parse(localData);
+        }
+    }
+    
+    if (data) {
+        document.querySelector('.name').textContent = data.name || '张三';
+        document.querySelectorAll('.contact-item')[0].textContent = `电话：${data.phone || '138-0000-0000'}`;
+        document.querySelectorAll('.contact-item')[1].textContent = `邮箱：${data.email || 'zhangsan@example.com'}`;
+        
+        // 加载头像
+        if (data.avatar) {
+            document.querySelector('.avatar').src = data.avatar;
+        }
+    }
+}
+
+// 从本地存储加载基本信息（降级用）
+function loadBasicInfoFromLocal() {
     const basicInfo = localStorage.getItem('basicInfo');
     if (basicInfo) {
         const data = JSON.parse(basicInfo);
@@ -125,16 +200,54 @@ function loadBasicInfo() {
 }
 
 // 加载教育经历
-function loadEducation() {
+function loadEducation(apiData = null) {
+    let data = apiData;
+    
+    if (!data || !Array.isArray(data)) {
+        const localData = localStorage.getItem('education');
+        if (localData) {
+            data = JSON.parse(localData);
+        } else {
+            data = [];
+        }
+    }
+    
+    const educationContainer = document.getElementById('education');
+    if (!educationContainer) return;
+    
+    // 清空现有内容（保留标题）
+    const title = educationContainer.querySelector('.section-title');
+    educationContainer.innerHTML = '';
+    if (title) educationContainer.appendChild(title);
+    
+    // 添加教育经历项
+    if (data && data.length > 0) {
+        data.forEach(item => {
+            const educationItem = document.createElement('div');
+            educationItem.className = 'education-item';
+            educationItem.innerHTML = `
+                <h3 class="education-degree">${item.degree || ''}</h3>
+                <p class="education-school">${item.school || ''}</p>
+                <p class="education-time">${item.time || ''}</p>
+                <p class="education-desc">${item.desc || ''}</p>
+            `;
+            educationContainer.appendChild(educationItem);
+        });
+    }
+}
+
+// 从本地存储加载教育经历
+function loadEducationFromLocal() {
     const education = localStorage.getItem('education');
     if (education) {
         const data = JSON.parse(education);
         const educationContainer = document.getElementById('education');
+        if (!educationContainer) return;
         
         // 清空现有内容（保留标题）
         const title = educationContainer.querySelector('.section-title');
         educationContainer.innerHTML = '';
-        educationContainer.appendChild(title);
+        if (title) educationContainer.appendChild(title);
         
         // 添加教育经历项
         data.forEach(item => {
@@ -152,16 +265,62 @@ function loadEducation() {
 }
 
 // 加载技能
-function loadSkills() {
+function loadSkills(apiData = null) {
+    let data = apiData;
+    
+    if (!data || !Array.isArray(data)) {
+        const localData = localStorage.getItem('skills');
+        if (localData) {
+            data = JSON.parse(localData);
+        } else {
+            data = [];
+        }
+    }
+    
+    const skillsContainer = document.getElementById('skills');
+    if (!skillsContainer) return;
+    
+    // 清空现有内容（保留标题）
+    const title = skillsContainer.querySelector('.section-title');
+    skillsContainer.innerHTML = '';
+    if (title) skillsContainer.appendChild(title);
+    
+    if (data && data.length > 0) {
+        // 创建技能容器
+        const skillsList = document.createElement('div');
+        skillsList.className = 'skills-container';
+        
+        // 添加技能项
+        data.forEach(item => {
+            // 将10分制转换为百分比（1分=10%）
+            const percentage = (item.level || 0) * 10;
+            const skillItem = document.createElement('div');
+            skillItem.className = 'skill-item';
+            skillItem.innerHTML = `
+                <span class="skill-name">${item.name || ''}</span>
+                <div class="skill-bar">
+                    <div class="skill-progress" style="width: ${percentage}%;" data-level="${item.level || 0}"></div>
+                </div>
+            `;
+            skillsList.appendChild(skillItem);
+        });
+        
+        skillsContainer.appendChild(skillsList);
+    }
+}
+
+// 从本地存储加载技能
+function loadSkillsFromLocal() {
     const skills = localStorage.getItem('skills');
     if (skills) {
         const data = JSON.parse(skills);
         const skillsContainer = document.getElementById('skills');
+        if (!skillsContainer) return;
         
         // 清空现有内容（保留标题）
         const title = skillsContainer.querySelector('.section-title');
         skillsContainer.innerHTML = '';
-        skillsContainer.appendChild(title);
+        if (title) skillsContainer.appendChild(title);
         
         // 创建技能容器
         const skillsList = document.createElement('div');
@@ -183,26 +342,59 @@ function loadSkills() {
         });
         
         skillsContainer.appendChild(skillsList);
-        
-        // 重新观察技能section，以便再次触发动画
-        const skillsSection = document.getElementById('skills');
-        if (skillsSection) {
-            observer.observe(skillsSection);
-        }
     }
 }
 
 // 加载工作经历
-function loadWork() {
+function loadWork(apiData = null) {
+    let data = apiData;
+    
+    if (!data || !Array.isArray(data)) {
+        const localData = localStorage.getItem('work');
+        if (localData) {
+            data = JSON.parse(localData);
+        } else {
+            data = [];
+        }
+    }
+    
+    const workContainer = document.getElementById('work');
+    if (!workContainer) return;
+    
+    // 清空现有内容（保留标题）
+    const title = workContainer.querySelector('.section-title');
+    workContainer.innerHTML = '';
+    if (title) workContainer.appendChild(title);
+    
+    if (data && data.length > 0) {
+        data.forEach(item => {
+            const workItem = document.createElement('div');
+            workItem.className = 'work-item';
+            workItem.innerHTML = `
+                <h3 class="work-position">${item.position || ''}</h3>
+                <p class="work-company">${item.company || ''}</p>
+                <p class="work-time">${item.time || ''}</p>
+                <ul class="work-desc">
+                    ${(item.desc || '').split('\n').map(line => `<li>${line}</li>`).join('')}
+                </ul>
+            `;
+            workContainer.appendChild(workItem);
+        });
+    }
+}
+
+// 从本地存储加载工作经历
+function loadWorkFromLocal() {
     const work = localStorage.getItem('work');
     if (work) {
         const data = JSON.parse(work);
         const workContainer = document.getElementById('work');
+        if (!workContainer) return;
         
         // 清空现有内容（保留标题）
         const title = workContainer.querySelector('.section-title');
         workContainer.innerHTML = '';
-        workContainer.appendChild(title);
+        if (title) workContainer.appendChild(title);
         
         // 添加工作经历项
         data.forEach(item => {
@@ -222,16 +414,53 @@ function loadWork() {
 }
 
 // 加载项目经历
-function loadProjects() {
+function loadProjects(apiData = null) {
+    let data = apiData;
+    
+    if (!data || !Array.isArray(data)) {
+        const localData = localStorage.getItem('projects');
+        if (localData) {
+            data = JSON.parse(localData);
+        } else {
+            data = [];
+        }
+    }
+    
+    const projectsContainer = document.getElementById('projects');
+    if (!projectsContainer) return;
+    
+    // 清空现有内容（保留标题）
+    const title = projectsContainer.querySelector('.section-title');
+    projectsContainer.innerHTML = '';
+    if (title) projectsContainer.appendChild(title);
+    
+    if (data && data.length > 0) {
+        data.forEach(item => {
+            const projectItem = document.createElement('div');
+            projectItem.className = 'project-item';
+            projectItem.innerHTML = `
+                <h3 class="project-name">${item.name || ''}</h3>
+                <p class="project-time">${item.time || ''}</p>
+                <p class="project-desc">${item.desc || ''}</p>
+                <p class="project-tech">技术栈：${item.tech || ''}</p>
+            `;
+            projectsContainer.appendChild(projectItem);
+        });
+    }
+}
+
+// 从本地存储加载项目经历
+function loadProjectsFromLocal() {
     const projects = localStorage.getItem('projects');
     if (projects) {
         const data = JSON.parse(projects);
         const projectsContainer = document.getElementById('projects');
+        if (!projectsContainer) return;
         
         // 清空现有内容（保留标题）
         const title = projectsContainer.querySelector('.section-title');
         projectsContainer.innerHTML = '';
-        projectsContainer.appendChild(title);
+        if (title) projectsContainer.appendChild(title);
         
         // 添加项目经历项
         data.forEach(item => {
@@ -249,20 +478,74 @@ function loadProjects() {
 }
 
 // 加载作品展示
-function loadWorks() {
-    const works = localStorage.getItem('works');
+function loadWorks(apiData = null) {
+    let data = apiData;
+    
+    if (!data || !Array.isArray(data)) {
+        const localData = localStorage.getItem('works');
+        if (localData) {
+            data = JSON.parse(localData);
+        } else {
+            data = [];
+        }
+    }
+    
     const worksContainer = document.getElementById('works');
+    if (!worksContainer) return;
     
     // 清空现有内容（保留标题）
     const title = worksContainer.querySelector('.section-title');
     worksContainer.innerHTML = '';
-    worksContainer.appendChild(title);
+    if (title) worksContainer.appendChild(title);
     
     // 创建作品容器
     const worksList = document.createElement('div');
     worksList.className = 'works-container';
     
-    // 添加作品项
+    if (data && data.length > 0) {
+        data.forEach(item => {
+            const workItem = document.createElement('div');
+            workItem.className = 'work-item';
+            workItem.innerHTML = `
+                <img src="${item.img || 'work1.jpg'}" alt="${item.title || '作品'}" class="work-img">
+                <p class="work-title">${item.title || ''}</p>
+                ${item.desc ? `<p class="work-desc">${item.desc}</p>` : ''}
+            `;
+            
+            // 添加点击事件，用于图片预览
+            workItem.addEventListener('click', () => {
+                openImageModal(item);
+            });
+            
+            worksList.appendChild(workItem);
+        });
+    } else {
+        // 如果没有作品，添加一个提示
+        worksList.innerHTML = `
+            <div class="no-works">
+                <p>暂无作品展示</p>
+            </div>
+        `;
+    }
+    
+    worksContainer.appendChild(worksList);
+}
+
+// 从本地存储加载作品展示
+function loadWorksFromLocal() {
+    const works = localStorage.getItem('works');
+    const worksContainer = document.getElementById('works');
+    if (!worksContainer) return;
+    
+    // 清空现有内容（保留标题）
+    const title = worksContainer.querySelector('.section-title');
+    worksContainer.innerHTML = '';
+    if (title) worksContainer.appendChild(title);
+    
+    // 创建作品容器
+    const worksList = document.createElement('div');
+    worksList.className = 'works-container';
+    
     if (works) {
         const data = JSON.parse(works);
         if (data.length > 0) {
@@ -301,6 +584,8 @@ function loadWorks() {
     
     worksContainer.appendChild(worksList);
 }
+
+// ==================== 图片预览功能（保持不变） ====================
 
 // 图片预览功能
 const modal = document.getElementById('imageModal');
@@ -594,17 +879,13 @@ if (skillsSection) {
     observer.observe(skillsSection);
 }
 
-// 当技能数据加载完成后，初始化技能条
+// 初始化技能条
 function initSkillBars() {
-    // 已经在loadSkills中设置了data-level属性，无需再次设置
-    // 只需要确保技能条有正确的宽度
     const skillBars = document.querySelectorAll('.skill-progress');
     skillBars.forEach(bar => {
-        // 确保技能条有正确的宽度
         if (!bar.style.width) {
             const level = bar.getAttribute('data-level');
             if (level) {
-                // 将10分制转换为百分比
                 const percentage = level * 10;
                 bar.style.width = `${percentage}%`;
             }
