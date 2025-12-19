@@ -1,9 +1,15 @@
+// ==================== API 配置 ====================
+// 使用您Vercel项目的生产域名
+const API_BASE_URL = 'https://372790111z-wq-github-io.vercel.app';
+const API_DATA_URL = `${API_BASE_URL}/api/data`;
+// ==================== 结束配置 ====================
+
 // 标签页切换功能
 const tabBtns = document.querySelectorAll('.tab-btn');
 const formPanels = document.querySelectorAll('.form-panel');
 
 // 为标签按钮添加点击事件
- tabBtns.forEach(btn => {
+tabBtns.forEach(btn => {
     btn.addEventListener('click', () => {
         // 移除所有按钮的active类
         tabBtns.forEach(b => b.classList.remove('active'));
@@ -33,7 +39,7 @@ function addEducationItem() {
     newItem.innerHTML = `
         <div class="form-group">
             <label for="edu-degree-${itemCount}">学位</label>
-            <input type="text" name="edu-degree" placeholder="本科 - 计算机科学与技术">
+            <input type="text" name="edu-degree" placeholder="本科 - 给水排水工程">
         </div>
         <div class="form-group">
             <label for="edu-school-${itemCount}">学校</label>
@@ -167,11 +173,50 @@ function removeItem(btn) {
     item.remove();
 }
 
-// 保存基本信息
+// ==================== 保存函数（已改造为API调用） ====================
+
+// 通用API保存函数
+async function saveDataToAPI(dataKey, data, successMessage = '保存成功！') {
+    const payload = {};
+    payload[dataKey] = data;
+    
+    try {
+        const response = await fetch(API_DATA_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            // API保存成功后，同时保存到本地作为缓存
+            localStorage.setItem(dataKey, JSON.stringify(data));
+            return { success: true, message: '✅ ' + successMessage + ' 数据已上传至服务器。' };
+        } else {
+            return { success: false, message: '❌ 保存失败：' + (result.message || '未知错误') };
+        }
+    } catch (error) {
+        console.error('保存失败:', error);
+        // 网络错误时降级到本地存储
+        localStorage.setItem(dataKey, JSON.stringify(data));
+        return { success: false, message: '❌ 网络错误，数据已临时保存到本地。' };
+    }
+}
+
+// 保存基本信息（已改造）
 const basicForm = document.getElementById('basic-form');
 if (basicForm) {
-    basicForm.addEventListener('submit', (e) => {
+    basicForm.addEventListener('submit', async (e) => {
         e.preventDefault();
+        
+        const saveBtn = basicForm.querySelector('button[type="submit"]');
+        const originalText = saveBtn.textContent;
+        saveBtn.textContent = '保存中...';
+        saveBtn.disabled = true;
+        
         const formData = new FormData(basicForm);
         const data = {
             name: formData.get('name'),
@@ -181,12 +226,14 @@ if (basicForm) {
         
         // 处理头像文件
         const avatarFile = formData.get('avatar');
-        if (avatarFile instanceof File) {
+        if (avatarFile instanceof File && avatarFile.size > 0) {
             const reader = new FileReader();
-            reader.onload = (event) => {
+            reader.onload = async (event) => {
                 data.avatar = event.target.result;
-                localStorage.setItem('basicInfo', JSON.stringify(data));
-                alert('基本信息保存成功！');
+                const result = await saveDataToAPI('basicInfo', data, '基本信息保存成功！');
+                alert(result.message);
+                saveBtn.textContent = originalText;
+                saveBtn.disabled = false;
             };
             reader.readAsDataURL(avatarFile);
         } else {
@@ -196,14 +243,22 @@ if (basicForm) {
                 const existingData = JSON.parse(existingInfo);
                 data.avatar = existingData.avatar;
             }
-            localStorage.setItem('basicInfo', JSON.stringify(data));
-            alert('基本信息保存成功！');
+            
+            const result = await saveDataToAPI('basicInfo', data, '基本信息保存成功！');
+            alert(result.message);
+            saveBtn.textContent = originalText;
+            saveBtn.disabled = false;
         }
     });
 }
 
-// 保存教育经历
-function saveEducation() {
+// 保存教育经历（已改造）
+async function saveEducation() {
+    const saveBtn = document.querySelector('button[onclick="saveEducation()"]');
+    const originalText = saveBtn.textContent;
+    saveBtn.textContent = '保存中...';
+    saveBtn.disabled = true;
+    
     const educationItems = document.querySelectorAll('#education-list .education-item');
     const educationData = [];
     
@@ -223,12 +278,20 @@ function saveEducation() {
         }
     });
     
-    localStorage.setItem('education', JSON.stringify(educationData));
-    alert('教育经历保存成功！');
+    const result = await saveDataToAPI('education', educationData, '教育经历保存成功！');
+    alert(result.message);
+    
+    saveBtn.textContent = originalText;
+    saveBtn.disabled = false;
 }
 
-// 保存技能
-function saveSkills() {
+// 保存技能（已改造）
+async function saveSkills() {
+    const saveBtn = document.querySelector('button[onclick="saveSkills()"]');
+    const originalText = saveBtn.textContent;
+    saveBtn.textContent = '保存中...';
+    saveBtn.disabled = true;
+    
     const skillItems = document.querySelectorAll('#skills-list .skill-item');
     const skillsData = [];
     
@@ -244,12 +307,20 @@ function saveSkills() {
         }
     });
     
-    localStorage.setItem('skills', JSON.stringify(skillsData));
-    alert('技能保存成功！');
+    const result = await saveDataToAPI('skills', skillsData, '技能保存成功！');
+    alert(result.message);
+    
+    saveBtn.textContent = originalText;
+    saveBtn.disabled = false;
 }
 
-// 保存工作经历
-function saveWork() {
+// 保存工作经历（已改造）
+async function saveWork() {
+    const saveBtn = document.querySelector('button[onclick="saveWork()"]');
+    const originalText = saveBtn.textContent;
+    saveBtn.textContent = '保存中...';
+    saveBtn.disabled = true;
+    
     const workItems = document.querySelectorAll('#work-list .work-item');
     const workData = [];
     
@@ -269,12 +340,20 @@ function saveWork() {
         }
     });
     
-    localStorage.setItem('work', JSON.stringify(workData));
-    alert('工作经历保存成功！');
+    const result = await saveDataToAPI('work', workData, '工作经历保存成功！');
+    alert(result.message);
+    
+    saveBtn.textContent = originalText;
+    saveBtn.disabled = false;
 }
 
-// 保存项目经历
-function saveProjects() {
+// 保存项目经历（已改造）
+async function saveProjects() {
+    const saveBtn = document.querySelector('button[onclick="saveProjects()"]');
+    const originalText = saveBtn.textContent;
+    saveBtn.textContent = '保存中...';
+    saveBtn.disabled = true;
+    
     const projectItems = document.querySelectorAll('#projects-list .project-item');
     const projectsData = [];
     
@@ -294,20 +373,30 @@ function saveProjects() {
         }
     });
     
-    localStorage.setItem('projects', JSON.stringify(projectsData));
-    alert('项目经历保存成功！');
+    const result = await saveDataToAPI('projects', projectsData, '项目经历保存成功！');
+    alert(result.message);
+    
+    saveBtn.textContent = originalText;
+    saveBtn.disabled = false;
 }
 
-// 保存作品
-function saveWorks() {
+// 保存作品（已改造）
+async function saveWorks() {
+    const saveBtn = document.querySelector('button[onclick="saveWorks()"]');
+    const originalText = saveBtn.textContent;
+    saveBtn.textContent = '保存中...';
+    saveBtn.disabled = true;
+    
     const workItems = document.querySelectorAll('#works-list .works-item');
     const worksData = [];
     let itemsProcessed = 0;
     
-    // 如果没有作品项，直接保存
+    // 如果没有作品项，直接保存空数组
     if (workItems.length === 0) {
-        localStorage.setItem('works', JSON.stringify(worksData));
-        alert('作品保存成功！');
+        const result = await saveDataToAPI('works', worksData, '作品保存成功！');
+        alert(result.message);
+        saveBtn.textContent = originalText;
+        saveBtn.disabled = false;
         return;
     }
     
@@ -324,7 +413,7 @@ function saveWorks() {
             
             if (imgFile instanceof File) {
                 const reader = new FileReader();
-                reader.onload = (event) => {
+                reader.onload = async (event) => {
                     workData.img = event.target.result;
                     worksData[index] = workData;
                     itemsProcessed++;
@@ -332,8 +421,10 @@ function saveWorks() {
                     if (itemsProcessed === workItems.length) {
                         // 过滤掉空项
                         const validWorks = worksData.filter(item => item);
-                        localStorage.setItem('works', JSON.stringify(validWorks));
-                        alert('作品保存成功！');
+                        const result = await saveDataToAPI('works', validWorks, '作品保存成功！');
+                        alert(result.message);
+                        saveBtn.textContent = originalText;
+                        saveBtn.disabled = false;
                     }
                 };
                 reader.readAsDataURL(imgFile);
@@ -345,8 +436,10 @@ function saveWorks() {
                 
                 if (itemsProcessed === workItems.length) {
                     const validWorks = worksData.filter(item => item);
-                    localStorage.setItem('works', JSON.stringify(validWorks));
-                    alert('作品保存成功！');
+                    const result = await saveDataToAPI('works', validWorks, '作品保存成功！');
+                    alert(result.message);
+                    saveBtn.textContent = originalText;
+                    saveBtn.disabled = false;
                 }
             }
         } else {
@@ -354,27 +447,52 @@ function saveWorks() {
             
             if (itemsProcessed === workItems.length) {
                 const validWorks = worksData.filter(item => item);
-                localStorage.setItem('works', JSON.stringify(validWorks));
-                alert('作品保存成功！');
+                const result = await saveDataToAPI('works', validWorks, '作品保存成功！');
+                alert(result.message);
+                saveBtn.textContent = originalText;
+                saveBtn.disabled = false;
             }
         }
     });
 }
 
+// ==================== 页面加载时恢复数据 ====================
+
+// 从API加载数据的通用函数
+async function loadDataFromAPI(dataKey, defaultValue = []) {
+    try {
+        const response = await fetch(API_DATA_URL);
+        const allData = await response.json();
+        
+        if (allData && allData[dataKey] !== undefined) {
+            return allData[dataKey];
+        }
+    } catch (error) {
+        console.error(`从API加载${dataKey}失败:`, error);
+    }
+    
+    // 如果API失败，尝试从本地缓存加载
+    const localData = localStorage.getItem(dataKey);
+    if (localData) {
+        return JSON.parse(localData);
+    }
+    
+    return defaultValue;
+}
+
 // 页面加载时恢复数据
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', async () => {
     // 恢复基本信息
-    const basicInfo = localStorage.getItem('basicInfo');
-    if (basicInfo) {
-        const data = JSON.parse(basicInfo);
-        document.getElementById('name').value = data.name || '';
-        document.getElementById('phone').value = data.phone || '';
-        document.getElementById('email').value = data.email || '';
+    const basicInfo = await loadDataFromAPI('basicInfo', {});
+    if (basicInfo && Object.keys(basicInfo).length > 0) {
+        document.getElementById('name').value = basicInfo.name || '';
+        document.getElementById('phone').value = basicInfo.phone || '';
+        document.getElementById('email').value = basicInfo.email || '';
         // 恢复头像（显示在页面上，实际项目中可能需要预览功能）
-        if (data.avatar) {
+        if (basicInfo.avatar) {
             // 创建一个预览元素
             const avatarPreview = document.createElement('div');
-            avatarPreview.innerHTML = `<img src="${data.avatar}" alt="当前头像" style="max-width: 100px; max-height: 100px; margin-top: 10px; border-radius: 50%;">`;
+            avatarPreview.innerHTML = `<img src="${basicInfo.avatar}" alt="当前头像" style="max-width: 100px; max-height: 100px; margin-top: 10px; border-radius: 50%;">`;
             const avatarInput = document.getElementById('avatar');
             // 检查是否已存在预览
             const existingPreview = avatarInput.parentElement.querySelector('.avatar-preview');
@@ -387,178 +505,151 @@ window.addEventListener('DOMContentLoaded', () => {
     }
     
     // 恢复教育经历
-    const education = localStorage.getItem('education');
-    if (education) {
-        const data = JSON.parse(education);
+    const education = await loadDataFromAPI('education', []);
+    if (education.length > 0) {
         const educationList = document.getElementById('education-list');
-        // 清空现有项（保留一个空项）
         educationList.innerHTML = '';
         
-        if (data.length === 0) {
-            // 添加一个空项
-            addEducationItem();
-        } else {
-            data.forEach((item, index) => {
-                const newItem = document.createElement('div');
-                newItem.className = 'education-item form-item';
-                newItem.innerHTML = `
-                    <div class="form-group">
-                        <label for="edu-degree-${index}">学位</label>
-                        <input type="text" name="edu-degree" value="${item.degree}" placeholder="本科 - 计算机科学与技术">
-                    </div>
-                    <div class="form-group">
-                        <label for="edu-school-${index}">学校</label>
-                        <input type="text" name="edu-school" value="${item.school}" placeholder="北京大学">
-                    </div>
-                    <div class="form-group">
-                        <label for="edu-time-${index}">时间</label>
-                        <input type="text" name="edu-time" value="${item.time}" placeholder="2018.09 - 2022.06">
-                    </div>
-                    <div class="form-group">
-                        <label for="edu-desc-${index}">描述</label>
-                        <textarea name="edu-desc" rows="3" placeholder="主修课程：数据结构、算法设计...">${item.desc}</textarea>
-                    </div>
-                    <button class="remove-btn" onclick="removeItem(this)">删除</button>
-                `;
-                educationList.appendChild(newItem);
-            });
-        }
+        education.forEach((item, index) => {
+            const newItem = document.createElement('div');
+            newItem.className = 'education-item form-item';
+            newItem.innerHTML = `
+                <div class="form-group">
+                    <label for="edu-degree-${index}">学位</label>
+                    <input type="text" name="edu-degree" value="${item.degree}" placeholder="本科 - 计算机科学与技术">
+                </div>
+                <div class="form-group">
+                    <label for="edu-school-${index}">学校</label>
+                    <input type="text" name="edu-school" value="${item.school}" placeholder="北京大学">
+                </div>
+                <div class="form-group">
+                    <label for="edu-time-${index}">时间</label>
+                    <input type="text" name="edu-time" value="${item.time}" placeholder="2018.09 - 2022.06">
+                </div>
+                <div class="form-group">
+                    <label for="edu-desc-${index}">描述</label>
+                    <textarea name="edu-desc" rows="3" placeholder="主修课程：数据结构、算法设计...">${item.desc}</textarea>
+                </div>
+                <button class="remove-btn" onclick="removeItem(this)">删除</button>
+            `;
+            educationList.appendChild(newItem);
+        });
     }
     
     // 恢复技能
-    const skills = localStorage.getItem('skills');
-    if (skills) {
-        const data = JSON.parse(skills);
+    const skills = await loadDataFromAPI('skills', []);
+    if (skills.length > 0) {
         const skillsList = document.getElementById('skills-list');
         skillsList.innerHTML = '';
         
-        if (data.length === 0) {
-            addSkillItem();
-        } else {
-            data.forEach((item, index) => {
-                const newItem = document.createElement('div');
-                newItem.className = 'skill-item form-item';
-                newItem.innerHTML = `
-                    <div class="form-group">
-                        <label for="skill-name-${index}">技能名称</label>
-                        <input type="text" name="skill-name" value="${item.name}" placeholder="HTML/CSS">
-                    </div>
-                    <div class="form-group">
-                        <label for="skill-level-${index}">熟练度（0-10）</label>
-                        <input type="number" name="skill-level" min="0" max="10" step="0.5" value="${item.level}" placeholder="9">
-                    </div>
-                    <button class="remove-btn" onclick="removeItem(this)">删除</button>
-                `;
-                skillsList.appendChild(newItem);
-            });
-        }
+        skills.forEach((item, index) => {
+            const newItem = document.createElement('div');
+            newItem.className = 'skill-item form-item';
+            newItem.innerHTML = `
+                <div class="form-group">
+                    <label for="skill-name-${index}">技能名称</label>
+                    <input type="text" name="skill-name" value="${item.name}" placeholder="HTML/CSS">
+                </div>
+                <div class="form-group">
+                    <label for="skill-level-${index}">熟练度（0-10）</label>
+                    <input type="number" name="skill-level" min="0" max="10" step="0.5" value="${item.level}" placeholder="9">
+                </div>
+                <button class="remove-btn" onclick="removeItem(this)">删除</button>
+            `;
+            skillsList.appendChild(newItem);
+        });
     }
     
     // 恢复工作经历
-    const work = localStorage.getItem('work');
-    if (work) {
-        const data = JSON.parse(work);
+    const work = await loadDataFromAPI('work', []);
+    if (work.length > 0) {
         const workList = document.getElementById('work-list');
         workList.innerHTML = '';
         
-        if (data.length === 0) {
-            addWorkItem();
-        } else {
-            data.forEach((item, index) => {
-                const newItem = document.createElement('div');
-                newItem.className = 'work-item form-item';
-                newItem.innerHTML = `
-                    <div class="form-group">
-                        <label for="work-position-${index}">职位</label>
-                        <input type="text" name="work-position" value="${item.position}" placeholder="前端开发工程师">
-                    </div>
-                    <div class="form-group">
-                        <label for="work-company-${index}">公司</label>
-                        <input type="text" name="work-company" value="${item.company}" placeholder="ABC科技有限公司">
-                    </div>
-                    <div class="form-group">
-                        <label for="work-time-${index}">时间</label>
-                        <input type="text" name="work-time" value="${item.time}" placeholder="2022.07 - 至今">
-                    </div>
-                    <div class="form-group">
-                        <label for="work-desc-${index}">描述</label>
-                        <textarea name="work-desc" rows="3" placeholder="负责公司官网的前端开发和维护...">${item.desc}</textarea>
-                    </div>
-                    <button class="remove-btn" onclick="removeItem(this)">删除</button>
-                `;
-                workList.appendChild(newItem);
-            });
-        }
+        work.forEach((item, index) => {
+            const newItem = document.createElement('div');
+            newItem.className = 'work-item form-item';
+            newItem.innerHTML = `
+                <div class="form-group">
+                    <label for="work-position-${index}">职位</label>
+                    <input type="text" name="work-position" value="${item.position}" placeholder="前端开发工程师">
+                </div>
+                <div class="form-group">
+                    <label for="work-company-${index}">公司</label>
+                    <input type="text" name="work-company" value="${item.company}" placeholder="ABC科技有限公司">
+                </div>
+                <div class="form-group">
+                    <label for="work-time-${index}">时间</label>
+                    <input type="text" name="work-time" value="${item.time}" placeholder="2022.07 - 至今">
+                </div>
+                <div class="form-group">
+                    <label for="work-desc-${index}">描述</label>
+                    <textarea name="work-desc" rows="3" placeholder="负责公司官网的前端开发和维护...">${item.desc}</textarea>
+                </div>
+                <button class="remove-btn" onclick="removeItem(this)">删除</button>
+            `;
+            workList.appendChild(newItem);
+        });
     }
     
     // 恢复项目经历
-    const projects = localStorage.getItem('projects');
-    if (projects) {
-        const data = JSON.parse(projects);
+    const projects = await loadDataFromAPI('projects', []);
+    if (projects.length > 0) {
         const projectsList = document.getElementById('projects-list');
         projectsList.innerHTML = '';
         
-        if (data.length === 0) {
-            addProjectItem();
-        } else {
-            data.forEach((item, index) => {
-                const newItem = document.createElement('div');
-                newItem.className = 'project-item form-item';
-                newItem.innerHTML = `
-                    <div class="form-group">
-                        <label for="project-name-${index}">项目名称</label>
-                        <input type="text" name="project-name" value="${item.name}" placeholder="电商平台前端重构">
-                    </div>
-                    <div class="form-group">
-                        <label for="project-time-${index}">时间</label>
-                        <input type="text" name="project-time" value="${item.time}" placeholder="2023.01 - 2023.06">
-                    </div>
-                    <div class="form-group">
-                        <label for="project-desc-${index}">项目描述</label>
-                        <textarea name="project-desc" rows="3" placeholder="使用React和Redux重构了公司电商平台的前端部分...">${item.desc}</textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="project-tech-${index}">技术栈</label>
-                        <input type="text" name="project-tech" value="${item.tech}" placeholder="React、Redux、React Router、Axios、Sass">
-                    </div>
-                    <button class="remove-btn" onclick="removeItem(this)">删除</button>
-                `;
-                projectsList.appendChild(newItem);
-            });
-        }
+        projects.forEach((item, index) => {
+            const newItem = document.createElement('div');
+            newItem.className = 'project-item form-item';
+            newItem.innerHTML = `
+                <div class="form-group">
+                    <label for="project-name-${index}">项目名称</label>
+                    <input type="text" name="project-name" value="${item.name}" placeholder="电商平台前端重构">
+                </div>
+                <div class="form-group">
+                    <label for="project-time-${index}">时间</label>
+                    <input type="text" name="project-time" value="${item.time}" placeholder="2023.01 - 2023.06">
+                </div>
+                <div class="form-group">
+                    <label for="project-desc-${index}">项目描述</label>
+                    <textarea name="project-desc" rows="3" placeholder="使用React和Redux重构了公司电商平台的前端部分...">${item.desc}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="project-tech-${index}">技术栈</label>
+                    <input type="text" name="project-tech" value="${item.tech}" placeholder="React、Redux、React Router、Axios、Sass">
+                </div>
+                <button class="remove-btn" onclick="removeItem(this)">删除</button>
+            `;
+            projectsList.appendChild(newItem);
+        });
     }
     
     // 恢复作品
-    const works = localStorage.getItem('works');
-    if (works) {
-        const data = JSON.parse(works);
+    const works = await loadDataFromAPI('works', []);
+    if (works.length > 0) {
         const worksList = document.getElementById('works-list');
         worksList.innerHTML = '';
         
-        if (data.length === 0) {
-            addWorksItem();
-        } else {
-            data.forEach((item, index) => {
-                const newItem = document.createElement('div');
-                newItem.className = 'works-item form-item';
-                newItem.innerHTML = `
-                    <div class="form-group">
-                        <label for="work-title-${index}">作品标题</label>
-                        <input type="text" name="work-title" value="${item.title}" placeholder="作品1">
-                    </div>
-                    <div class="form-group">
-                        <label for="work-desc-${index}">作品描述</label>
-                        <textarea name="work-desc" rows="3" placeholder="请输入作品描述">${item.desc || ''}</textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="work-img-${index}">作品图片</label>
-                        <input type="file" name="work-img" accept="image/*">
-                        ${item.img ? `<img src="${item.img}" alt="当前作品" style="max-width: 100px; max-height: 100px; margin-top: 10px; border-radius: 4px;">` : ''}
-                    </div>
-                    <button class="remove-btn" onclick="removeItem(this)">删除</button>
-                `;
-                worksList.appendChild(newItem);
-            });
-        }
+        works.forEach((item, index) => {
+            const newItem = document.createElement('div');
+            newItem.className = 'works-item form-item';
+            newItem.innerHTML = `
+                <div class="form-group">
+                    <label for="work-title-${index}">作品标题</label>
+                    <input type="text" name="work-title" value="${item.title}" placeholder="作品1">
+                </div>
+                <div class="form-group">
+                    <label for="work-desc-${index}">作品描述</label>
+                    <textarea name="work-desc" rows="3" placeholder="请输入作品描述">${item.desc || ''}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="work-img-${index}">作品图片</label>
+                    <input type="file" name="work-img" accept="image/*">
+                    ${item.img ? `<img src="${item.img}" alt="当前作品" style="max-width: 100px; max-height: 100px; margin-top: 10px; border-radius: 4px;">` : ''}
+                </div>
+                <button class="remove-btn" onclick="removeItem(this)">删除</button>
+            `;
+            worksList.appendChild(newItem);
+        });
     }
 });
