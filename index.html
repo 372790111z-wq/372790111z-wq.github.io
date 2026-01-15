@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="张梓琪 - AI产品经理，专注于AIGC、实时音视频通信、智能对话系统">
+    <title>张梓琪 | AI产品经理</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 粒子背景 -->
+    <canvas id="particles"></canvas>
+
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">&lt;ZZQ /&gt;</div>
+            <ul class="nav-menu">
+                <li><a href="#about">关于</a></li>
+                <li><a href="#experience">经历</a></li>
+                <li><a href="#projects">项目</a></li>
+                <li><a href="#skills">技能</a></li>
+                <li><a href="#portfolio">作品集</a></li>
+            </ul>
+            <div class="theme-toggle">
+                <i class="fas fa-moon"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero区域 -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="avatar-container">
+                <div class="avatar-ring"></div>
+                <div class="avatar">
+                    <i class="fas fa-user-astronaut"></i>
+                </div>
+                <div class="status-indicator"></div>
+            </div>
+            <div class="hero-text">
+                <p class="greeting">&lt;hello world /&gt;</p>
+                <h1 class="name">
+                    <span class="glitch" data-text="张梓琪">张梓琪</span>
+                </h1>
+                <p class="title">AI产品经理 <span class="cursor">|</span></p>
+                <p class="tagline">赋能业务 · 智造未来</p>
+                <div class="hero-badges">
+                    <span class="badge">AIGC</span>
+                    <span class="badge">RTC</span>
+                    <span class="badge">Agent</span>
+                    <span class="badge">数据驱动</span>
+                </div>
+                <div class="contact-info">
+                    <a href="tel:13241294350"><i class="fas fa-phone"></i> 132-4129-4350</a>
+                    <a href="mailto:372790111@qq.com"><i class="fas fa-envelope"></i> 372790111@qq.com</a>
+                </div>
+                <div class="hero-actions">
+                    <a href="#portfolio" class="btn btn-primary">
+                        <i class="fas fa-rocket"></i> 查看作品
+                    </a>
+                    <a href="#" class="btn btn-secondary" onclick="downloadResume()">
+                        <i class="fas fa-download"></i> 下载简历
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span>SCROLL</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- 关于我 -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="title-icon">&lt;/&gt;</span>
+                关于我
+            </h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p class="lead">AI赋能业务 · 产品战略与标准化 · 数据驱动决策</p>
+                    <p>作为AI产品经理，我专注于将人工智能技术转化为实际业务价值。在"灵犀"AI助理项目中，我主导了实时音视频通信（RTC）与AIGC自动化生产模块的架构设计，攻克了800ms响应瓶颈，建立了智能打断体系，降低15% Token消耗。</p>
+                    <p>我具备卓越的中台思维，曾构建政务产品化底层架构，提升交付效能30%以上。在贝壳期间，通过多维特征匹配算法提升数据核对效率40%，支撑91城精细化运营。</p>
+                    <div class="highlights">
+                        <div class="highlight-item">
+                            <i class="fas fa-chart-line"></i>
+                            <span>数据驱动决策</span>
+                        </div>
+                        <div class="highlight-item">
+                            <i class="fas fa-brain"></i>
+                            <span>AI战略规划</span>
+                        </div>
+                        <div class="highlight-item">
+                            <i class="fas fa-users"></i>
+                            <span>团队领导力</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-stats">
+                    <div class="stat-card">
+                        <span class="stat-number">8+</span>
+                        <span class="stat-label">年产品经验</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">91</span>
+                        <span class="stat-label">城市覆盖</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">40%</span>
+                        <span class="stat-label">效率提升</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">15%</span>
+                        <span class="stat-label">成本优化</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 工作经历 -->
+    <section id="experience" class="experience">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="title-icon">&lt;timeline/&gt;</span>
+                工作经历
+            </h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">2025.03 - 至今</span>
+                        <h3>天津神州数据科技有限公司</h3>
+                        <p class="position">AI产品经理</p>
+                        <ul class="achievements">
+                            <li>主导"灵犀"AI助理架构设计，确立Agent任务规划、记忆机制及多模态交互框架</li>
+                            <li>攻克RTC实时通话800ms响应瓶颈，建立智能打断体系，降低15% Token消耗</li>
+                            <li>负责AIGC模块Agent核心配置，实现播客全链路自动化生产</li>
+                            <li>建立AI产品评测体系（Benchmark）与交互范式标准化</li>
+                        </ul>
+                        <div class="tech-tags">
+                            <span class="tech-tag">RTC</span>
+                            <span class="tech-tag">AIGC</span>
+                            <span class="tech-tag">Agent</span>
+                            <span class="tech-tag">VAD</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">2023.05 - 2024.12</span>
+                        <h3>贝壳（北京）科技有限公司</h3>
+                        <p class="position">AI产品经理</p>
+                        <ul class="achievements">
+                            <li>主导构建智能数据对齐引擎，通过多维特征匹配算法提升核对效率40%</li>
+                            <li>设计多源异构数据冲突处理策略，解决海量数据重复实体识别问题</li>
+                            <li>推动"日日算、周周盘"功能模块上线，支撑91城精细化运营</li>
+                            <li>搭建T+1及小时级数据看板，统一结果统计口径</li>
+                        </ul>
+                        <div class="tech-tags">
+                            <span class="tech-tag">数据治理</span>
+                            <span class="tech-tag">算法优化</span>
+                            <span class="tech-tag">BI看板</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">2020.03 - 2023.04</span>
+                        <h3>首都信息发展股份有限公司</h3>
+                        <p class="position">产品经理</p>
+                        <ul class="achievements">
+                            <li>负责G端核心业务系统（组工人事系统）全生命周期管理</li>
+                            <li>构建"组工人事OA"产品化底层架构，交付效能提升30%以上</li>
+                            <li>统筹多个省级、市级重点项目，客户满意度保持95%以上</li>
+                            <li>助力公司中标河北、沈阳、辽宁等多地纪委及公安系统项目</li>
+                        </ul>
+                        <div class="tech-tags">
+                            <span class="tech-tag">G端产品</span>
+                            <span class="tech-tag">中台架构</span>
+                            <span class="tech-tag">项目管理</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">2017.07 - 2020.02</span>
+                        <h3>金吉列出国留学咨询服务有限公司</h3>
+                        <p class="position">产品经理</p>
+                        <ul class="achievements">
+                            <li>负责"大学长"平台（PC/APP）全生命周期管理</li>
+                            <li>主导会员制平台从0到1设计，3个月内GMV突破10万</li>
+                            <li>重构APP搜索模块，推荐算法CTR提升35%</li>
+                            <li>设计智能CRM客服系统，客服人效提升30%以上</li>
+                        </ul>
+                        <div class="tech-tags">
+                            <span class="tech-tag">增长策略</span>
+                            <span class="tech-tag">推荐算法</span>
+                            <span class="tech-tag">CRM</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">2015.11 - 2017.05</span>
+                        <h3>北京致趣科技有限公司</h3>
+                        <p class="position">产品经理</p>
+                        <ul class="achievements">
+                            <li>负责SCRM系统构建与全渠道获客体系优化</li>
+                            <li>完成自研SCRM系统全生命周期管理</li>
+                            <li>构建全渠道营销自动化获客路径</li>
+                            <li>参与大客户售前咨询，支持销售团队获客与签约</li>
+                        </ul>
+                        <div class="tech-tags">
+                            <span class="tech-tag">SCRM</span>
+                            <span class="tech-tag">营销自动化</span>
+                            <span class="tech-tag">获客</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 项目经历 -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="title-icon">&lt;projects/&gt;</span>
+                项目经历
+            </h2>
+            <div class="projects-grid">
+                <div class="project-card featured">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <span class="project-date">2025.04 - 2025.07</span>
+                    </div>
+                    <h3>灵犀 AI 实时音视频通话模块</h3>
+                    <p class="project-desc">为企业内部办公及政务咨询场景提供具备全时感知与自然对话能力的AI虚拟助手</p>
+                    <div class="project-highlights">
+                        <div class="highlight">
+                            <i class="fas fa-bolt"></i>
+                            <span>端到端延迟 &lt; 800ms</span>
+                        </div>
+                        <div class="highlight">
+                            <i class="fas fa-check-circle"></i>
+                            <span>ASR准确率 ≥ 95%</span>
+                        </div>
+                        <div class="highlight">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Token消耗降低15%</span>
+                        </div>
+                    </div>
+                    <ul class="project-details">
+                        <li>设计端云协同的智能打断机制（Barge-in）</li>
+                        <li>主导多模态感知、长短期记忆及任务规划架构</li>
+                        <li>沉淀标准化AI通话产品组件，支持多场景快速配置</li>
+                    </ul>
+                    <div class="project-tags">
+                        <span>RTC</span>
+                        <span>VAD</span>
+                        <span>多模态交互</span>
+                        <span>Agent规划</span>
+                    </div>
+                </div>
+
+                <div class="project-card featured">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <i class="fas fa-podcast"></i>
+                        </div>
+                        <span class="project-date">2025.08 - 2025.12</span>
+                    </div>
+                    <h3>灵犀 AI 自动化播客生成模块</h3>
+                    <p class="project-desc">用于企业内部培训、营销播客制作、知识付费产品的音频化转换</p>
+                    <div class="project-highlights">
+                        <div class="highlight">
+                            <i class="fas fa-cogs"></i>
+                            <span>全流程自动化</span>
+                        </div>
+                        <div class="highlight">
+                            <i class="fas fa-layer-group"></i>
+                            <span>多类型输入支持</span>
+                        </div>
+                        <div class="highlight">
+                            <i class="fas fa-sliders-h"></i>
+                            <span>个性化定制</span>
+                        </div>
+                    </div>
+                    <ul class="project-details">
+                        <li>负责AI Agent核心配置（意图识别、提示词体系、入参出参逻辑）</li>
+                        <li>实现单人/双人播客模式切换，支持音色选择</li>
+                        <li>支持文本/PDF/Word/网页链接等多种输入形式</li>
+                    </ul>
+                    <div class="project-tags">
+                        <span>AIGC</span>
+                        <span>音频合成</span>
+                        <span>内容生成</span>
+                        <span>Agent</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <span class="project-date">2023.05 - 2024.12</span>
+                    </div>
+                    <h3>行业指数系统</h3>
+                    <p class="project-desc">针对二手房、新房交易的数据匹配、分析及结果产出系统</p>
+                    <div class="project-highlights">
+                        <div class="highlight">
+                            <i class="fas fa-globe"></i>
+                            <span>91城全量覆盖</span>
+                        </div>
+                        <div class="highlight">
+                            <i class="fas fa-star"></i>
+                            <span>满意度4.0/5.0</span>
+                        </div>
+                    </div>
+                    <div class="project-tags">
+                        <span>数据治理</span>
+                        <span>数据匹配</span>
+                        <span>BI看板</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <span class="project-date">2020.03 - 2023.04</span>
+                    </div>
+                    <h3>组工人事系统</h3>
+                    <p class="project-desc">G端核心业务系统，涵盖机构编制、年度统计、任免审批等15+核心功能模块</p>
+                    <div class="project-highlights">
+                        <div class="highlight">
+                            <i class="fas fa-rocket"></i>
+                            <span>交付效能提升30%</span>
+                        </div>
+                        <div class="highlight">
+                            <i class="fas fa-smile"></i>
+                            <span>满意度95%+</span>
+                        </div>
+                    </div>
+                    <div class="project-tags">
+                        <span>G端产品</span>
+                        <span>中台架构</span>
+                        <span>政务系统</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 技能 -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="title-icon">&lt;skills/&gt;</span>
+                专业技能
+            </h2>
+            <div class="skills-container">
+                <div class="skill-category">
+                    <h3><i class="fas fa-brain"></i> AI & 技术能力</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">AIGC产品架构</span>
+                        <span class="skill-tag">Agent规划与配置</span>
+                        <span class="skill-tag">RTC实时通信</span>
+                        <span class="skill-tag">提示词工程</span>
+                        <span class="skill-tag">多模态交互</span>
+                        <span class="skill-tag">VAD语音活动检测</span>
+                        <span class="skill-tag">ASR/语音识别</span>
+                        <span class="skill-tag">意图识别</span>
+                        <span class="skill-tag">Token优化</span>
+                        <span class="skill-tag">智能打断系统</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3><i class="fas fa-chart-pie"></i> 数据与分析</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">数据对齐引擎</span>
+                        <span class="skill-tag">多维特征匹配</span>
+                        <span class="skill-tag">冲突仲裁机制</span>
+                        <span class="skill-tag">BI数据看板</span>
+                        <span class="skill-tag">指标标准化</span>
+                        <span class="skill-tag">数据驱动决策</span>
+                        <span class="skill-tag">算法调优</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3><i class="fas fa-tasks"></i> 产品能力</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">产品架构设计</span>
+                        <span class="skill-tag">中台思维</span>
+                        <span class="skill-tag">标准化体系</span>
+                        <span class="skill-tag">Benchmark评测</span>
+                        <span class="skill-tag">交互范式设计</span>
+                        <span class="skill-tag">用户体验优化</span>
+                        <span class="skill-tag">ROI分析</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3><i class="fas fa-users"></i> 项目与管理</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">产研统筹</span>
+                        <span class="skill-tag">跨部门协作</span>
+                        <span class="skill-tag">项目群管理</span>
+                        <span class="skill-tag">敏捷开发</span>
+                        <span class="skill-tag">售前咨询</span>
+                        <span class="skill-tag">招投标</span>
+                        <span class="skill-tag">团队领导</span>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3><i class="fas fa-industry"></i> 行业经验</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">政务数字化</span>
+                        <span class="skill-tag">房地产</span>
+                        <span class="skill-tag">在线教育</span>
+                        <span class="skill-tag">SCRM营销</span>
+                        <span class="skill-tag">企业服务</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 作品集 -->
+    <section id="portfolio" class="portfolio">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="title-icon">&lt;portfolio/&gt;</span>
+                作品集
+            </h2>
+            <p class="section-subtitle">更多作品正在整理中，敬请期待...</p>
+            <div class="portfolio-links">
+                <a href="#" class="portfolio-link">
+                    <div class="portfolio-icon">
+                        <i class="fas fa-file-pdf"></i>
+                    </div>
+                    <h3>完整简历</h3>
+                    <p>下载PDF版本简历</p>
+                </a>
+                <a href="mailto:372790111@qq.com" class="portfolio-link">
+                    <div class="portfolio-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3>联系我</h3>
+                    <p>期待与您交流</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">&lt;ZZQ /&gt;</div>
+                <div class="footer-social">
+                    <a href="tel:13241294350"><i class="fas fa-phone"></i></a>
+                    <a href="mailto:372790111@qq.com"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 张梓琪. All rights reserved.</p>
+                <p class="footer-tagline">Built with passion for AI & Product</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
