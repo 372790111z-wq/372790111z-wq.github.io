@@ -144,7 +144,8 @@ setTimeout(typeTitle, 1000);
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
+        const targetId = this.getAttribute('href');
+        const target = document.querySelector(targetId);
         if (target) {
             target.scrollIntoView({
                 behavior: 'smooth',
@@ -153,6 +154,32 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         }
     });
 });
+
+// ===== 悬浮导航栏滚动高亮 =====
+const sections = document.querySelectorAll('section[id]');
+const floatingNavItems = document.querySelectorAll('.floating-nav-item');
+
+function updateActiveNav() {
+    const scrollPosition = window.scrollY + 100;
+
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+        const sectionId = section.getAttribute('id');
+
+        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+            floatingNavItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('data-target') === sectionId) {
+                    item.classList.add('active');
+                }
+            });
+        }
+    });
+}
+
+window.addEventListener('scroll', updateActiveNav);
+window.addEventListener('load', updateActiveNav);
 
 // ===== 导航栏滚动效果 =====
 let lastScroll = 0;
