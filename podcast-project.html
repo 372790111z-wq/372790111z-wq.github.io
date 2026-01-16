@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>灵犀AI自动化播客生成模块 - 张梓琪</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .project-detail-header {
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.1), rgba(123, 44, 191, 0.1));
+            padding: 3rem 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--accent-primary);
+        }
+
+        .project-detail-header h1 {
+            font-size: 2.5rem;
+            color: var(--accent-primary);
+            margin-bottom: 1rem;
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+        }
+
+        .project-detail-header .company {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 2rem;
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 240, 255, 0.4);
+        }
+
+        .project-detail-content {
+            max-width: 900px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .detail-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .detail-section h2 {
+            color: var(--accent-primary);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .detail-section h3 {
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            margin: 1.5rem 0 1rem;
+        }
+
+        .detail-section p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .detail-section ul {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-section ul li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .detail-section ul li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--accent-primary);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: rgba(0, 240, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .feature-card .icon {
+            font-size: 2rem;
+            color: var(--accent-primary);
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h4 {
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p {
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        .tech-item {
+            padding: 0.5rem 1rem;
+            background: rgba(123, 44, 191, 0.2);
+            border: 1px solid var(--accent-secondary);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--accent-secondary);
+        }
+
+        .use-cases {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .use-case {
+            background: rgba(0, 240, 255, 0.05);
+            border-left: 3px solid var(--accent-primary);
+            padding: 1rem;
+            border-radius: 5px;
+        }
+
+        .use-case h4 {
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .use-case p {
+            font-size: 0.85rem;
+            margin: 0;
+        }
+
+        .process-flow {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: rgba(0, 240, 255, 0.03);
+            border-radius: 10px;
+        }
+
+        .process-step {
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+            padding: 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+        }
+
+        .process-step .step-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+            border-radius: 50%;
+            line-height: 30px;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .process-step h4 {
+            color: var(--text-primary);
+            margin: 0.5rem 0;
+        }
+
+        .process-step p {
+            font-size: 0.8rem;
+            margin: 0;
+        }
+
+        .process-arrow {
+            font-size: 1.5rem;
+            color: var(--accent-primary);
+        }
+    </style>
+</head>
+<body>
+    <!-- 粒子背景 -->
+    <canvas id="particles"></canvas>
+
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">&lt;ZZQ /&gt;</div>
+            <ul class="nav-menu">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="index.html#about">关于</a></li>
+                <li><a href="index.html#experience">经历</a></li>
+                <li><a href="index.html#projects">项目</a></li>
+                <li><a href="index.html#portfolio">作品集</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 项目详情头部 -->
+    <div class="project-detail-header">
+        <h1>灵犀 AI 自动化播客生成模块</h1>
+        <p class="company">天津神州数据科技有限公司 | 2025.08 - 2025.12</p>
+        <a href="index.html#projects" class="back-button">
+            <i class="fas fa-arrow-left"></i> 返回首页
+        </a>
+    </div>
+
+    <!-- 项目详情内容 -->
+    <div class="project-detail-content">
+        <!-- 项目概述 -->
+        <div class="detail-section">
+            <h2><i class="fas fa-podcast"></i> 项目概述</h2>
+            <p>灵犀AI自动化播客生成模块是一个企业级AIGC内容生产平台，用于企业内部培训、营销播客制作、知识付费产品的音频化转换。通过AI技术实现从文本到播客的全流程自动化生产。</p>
+            <p>该模块服务于企业市场、HR部门，能够低成本、高效率、批量产出标准化内容，同时也支持政务、文旅场景的AI讲解员播客。</p>
+        </div>
+
+        <!-- 核心功能 -->
+        <div class="detail-section">
+            <h2><i class="fas fa-star"></i> 核心功能</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="icon"><i class="fas fa-file-alt"></i></div>
+                    <h4>多类型输入支持</h4>
+                    <p>支持纯文本、PDF/Word文档、网页链接、混合输入等多种输入形式</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon"><i class="fas fa-users"></i></div>
+                    <h4>个性化定制</h4>
+                    <p>支持单人/双人模式切换，预设音色库选择</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon"><i class="fas fa-cogs"></i></div>
+                    <h4>全流程自动化</h4>
+                    <p>从输入处理到音频合成，全程无需人工干预</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon"><i class="fas fa-check-circle"></i></div>
+                    <h4>智能异常处理</h4>
+                    <p>解析失败、内容违规等场景的友好提示与澄清</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 业务流程 -->
+        <div class="detail-section">
+            <h2><i class="fas fa-project-diagram"></i> 业务流程</h2>
+            <div class="process-flow">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <h4>输入处理</h4>
+                    <p>文本/文档/链接</p>
+                </div>
+                <div class="process-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <h4>内容解析</h4>
+                    <p>结构化提取</p>
+                </div>
+                <div class="process-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <h4>脚本生成</h4>
+                    <p>Agent创作</p>
+                </div>
+                <div class="process-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <h4>音频合成</h4>
+                    <p>TTS生成</p>
+                </div>
+                <div class="process-arrow"><i class="fas fa-arrow-right"></i></div>
+                <div class="process-step">
+                    <div class="step-number">5</div>
+                    <h4>输出结果</h4>
+                    <p>音频+字幕+封面</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 核心职责 -->
+        <div class="detail-section">
+            <h2><i class="fas fa-tasks"></i> 核心职责</h2>
+            <ul>
+                <li><strong>Agent核心配置：</strong>负责AI播客模块的AI Agent核心配置，包括意图识别规则设定、分场景提示词体系搭建（单人/双人播客模板）、入参出参逻辑定义，实现前端模式参数自动识别与联动。</li>
+                <li><strong>业务流程设计：</strong>参与业务流程设计与梳理，绘制含Agent模块的全链路业务流程图，明确前端传入→Agent处理→结果返回的闭环逻辑。</li>
+                <li><strong>测试与优化：</strong>负责项目测试与优化，针对音色自然度、对话连贯性、合规检测准确率等指标进行迭代，解决双人模式音色串扰、实时互动延迟等问题。</li>
+            </ul>
+        </div>
+
+        <!-- 应用场景 -->
+        <div class="detail-section">
+            <h2><i class="fas fa-lightbulb"></i> 应用场景</h2>
+            <div class="use-cases">
+                <div class="use-case">
+                    <h4>企业内训</h4>
+                    <p>新员工入职培训、业务知识普及、企业政策宣讲</p>
+                </div>
+                <div class="use-case">
+                    <h4>营销播客</h4>
+                    <p>产品营销内容、品牌故事、客户案例分享</p>
+                </div>
+                <div class="use-case">
+                    <h4>知识付费</h4>
+                    <p>课程内容音频化、知识专栏、专家访谈</p>
+                </div>
+                <div class="use-case">
+                    <h4>政务讲解</h4>
+                    <p>政策解读、办事指南、公共服务宣传</p>
+                </div>
+                <div class="use-case">
+                    <h4>文旅推广</h4>
+                    <p>景点讲解、文化介绍、旅游攻略</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 技术亮点 -->
+        <div class="detail-section">
+            <h2><i class="fas fa-code"></i> 技术亮点</h2>
+            <h3>提示词工程</h3>
+            <p>构建分场景提示词体系，针对单人讲解和双人对话设计不同的Prompt模板，确保生成内容的自然度和专业性。</p>
+
+            <h3>意图识别与联动</h3>
+            <p>实现前端参数自动识别与Agent处理的智能联动，根据用户选择的模式自动调用相应的处理逻辑。</p>
+
+            <h3>双人模式优化</h3>
+            <p>解决了双人播客模式下的音色串扰问题，实现不同角色使用不同音色，对话自然流畅。</p>
+
+            <div class="tech-stack">
+                <span class="tech-item">AIGC</span>
+                <span class="tech-item">Agent</span>
+                <span class="tech-item">Prompt工程</span>
+                <span class="tech-item">TTS</span>
+                <span class="tech-item">意图识别</span>
+                <span class="tech-item">音频合成</span>
+                <span class="tech-item">内容生成</span>
+            </div>
+        </div>
+
+        <!-- 项目成果 -->
+        <div class="detail-section">
+            <h2><i class="fas fa-chart-line"></i> 项目成果</h2>
+            <ul>
+                <li>实现全流程自动化生产，从输入到输出无需人工干预</li>
+                <li>支持多种输入格式，满足不同用户的内容来源需求</li>
+                <li>提供个性化定制选项，包括模式和音色选择</li>
+                <li>建立完善的异常处理机制，保障用户体验</li>
+                <li>成功应用于企业内训、营销、政务等多个场景</li>
+            </ul>
+        </div>
+
+        <!-- 项目文档下载 -->
+        <div class="detail-section">
+            <h2><i class="fas fa-file-pdf"></i> 项目文档</h2>
+            <p>点击下方链接查看完整的项目文档：</p>
+            <a href="AI播客项目文档.pdf" target="_blank" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1rem;">
+                <i class="fas fa-external-link-alt"></i> 查看完整项目文档（PDF）
+            </a>
+        </div>
+
+        <!-- POC作品链接 -->
+        <div class="detail-section">
+            <h2><i class="fas fa-external-link-alt"></i> POC验证作品</h2>
+            <p>点击下方链接体验AI播客POC验证作品：</p>
+            <a href="https://www.coze.cn/s/UJiWrc0cuy8/" target="_blank" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1rem;">
+                <i class="fas fa-podcast"></i> 体验AI播客POC作品
+            </a>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">&lt;ZZQ /&gt;</div>
+                <div class="footer-social">
+                    <a href="tel:13241294350"><i class="fas fa-phone"></i></a>
+                    <a href="mailto:372790111@qq.com"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 张梓琪. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

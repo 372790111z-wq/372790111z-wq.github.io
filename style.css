@@ -641,6 +641,26 @@ section {
     transform: translateY(-5px);
 }
 
+.timeline-content.clickable {
+    cursor: pointer;
+    position: relative;
+}
+
+.timeline-content.clickable::after {
+    content: '点击查看详情 →';
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    font-size: 0.8rem;
+    color: var(--accent-primary);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.timeline-content.clickable:hover::after {
+    opacity: 1;
+}
+
 .timeline-date {
     display: inline-block;
     padding: 0.3rem 0.8rem;
@@ -738,6 +758,25 @@ section {
     transform: translateY(-10px);
     border-color: var(--accent-primary);
     box-shadow: 0 10px 30px rgba(0, 240, 255, 0.1);
+}
+
+.project-card.clickable {
+    cursor: pointer;
+}
+
+.project-card.clickable::after {
+    content: '点击查看详情 →';
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    font-size: 0.8rem;
+    color: var(--accent-primary);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.project-card.clickable:hover::after {
+    opacity: 1;
 }
 
 .project-card.featured {

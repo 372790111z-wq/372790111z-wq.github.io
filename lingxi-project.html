@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中国移动"灵犀"AI项目 - 张梓琪</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .project-detail-header {
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.1), rgba(123, 44, 191, 0.1));
+            padding: 3rem 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--accent-primary);
+        }
+
+        .project-detail-header h1 {
+            font-size: 2.5rem;
+            color: var(--accent-primary);
+            margin-bottom: 1rem;
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+        }
+
+        .project-detail-header .company {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 2rem;
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 240, 255, 0.4);
+        }
+
+        .project-detail-content {
+            max-width: 900px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .detail-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .detail-section h2 {
+            color: var(--accent-primary);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .detail-section h3 {
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            margin: 1.5rem 0 1rem;
+        }
+
+        .detail-section p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .detail-section ul {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-section ul li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .detail-section ul li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--accent-primary);
+        }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .metric-card {
+            background: rgba(0, 240, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .metric-card .value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--accent-primary);
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+        }
+
+        .metric-card .label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        .tech-item {
+            padding: 0.5rem 1rem;
+            background: rgba(123, 44, 191, 0.2);
+            border: 1px solid var(--accent-secondary);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--accent-secondary);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-primary);
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 1.5rem;
+            width: 2px;
+            height: calc(100% - 1rem);
+            background: var(--border);
+        }
+
+        .timeline-item:last-child::after {
+            display: none;
+        }
+
+        .timeline-date {
+            color: var(--accent-primary);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- 粒子背景 -->
+    <canvas id="particles"></canvas>
+
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">&lt;ZZQ /&gt;</div>
+            <ul class="nav-menu">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="index.html#about">关于</a></li>
+                <li><a href="index.html#experience">经历</a></li>
+                <li><a href="index.html#projects">项目</a></li>
+                <li><a href="index.html#portfolio">作品集</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 项目详情头部 -->
+    <div class="project-detail-header">
+        <h1>中国移动"灵犀"AI项目</h1>
+        <p class="company">天津神州数据科技有限公司 | 2025.03 - 至今</p>
+        <a href="index.html#experience" class="back-button">
+            <i class="fas fa-arrow-left"></i> 返回首页
+        </a>
+    </div>
+
+    <!-- 项目详情内容 -->
+    <div class="project-detail-content">
+        <!-- 项目概述 -->
+        <div class="detail-section">
+            <h2><i class="fas fa-rocket"></i> 项目概述</h2>
+            <p>灵犀是一个面向企业内部办公及政务咨询场景的AI智能助理生态系统。作为核心AI产品经理，我主导了整个AI助理的架构设计与落地，涵盖了实时音视频通信（RTC）、AIGC自动化生产等核心模块。</p>
+            <p>该项目旨在通过AI技术提升政务咨询效率和企业办公智能化水平，实现从传统人工服务向AI驱动的智能服务转型。</p>
+        </div>
+
+        <!-- 核心职责 -->
+        <div class="detail-section">
+            <h2><i class="fas fa-tasks"></i> 核心职责</h2>
+            <ul>
+                <li><strong>产品架构设计：</strong>负责"灵犀"生态中AI实时音视频通信（RTC）与AIGC自动化生产模块的底层架构设计，确立Agent任务规划、记忆机制及多模态交互的核心逻辑框架。</li>
+                <li><strong>策略与逻辑定义：</strong>负责AI Agent的核心策略配置，主导标准化提示词（Prompt）体系构建及复杂的入参出参逻辑定义，确保AI能力在不同业务场景下的精准输出与系统联动。</li>
+                <li><strong>产研统筹与决策：</strong>深度对齐算法、工程及业务团队，在技术边界、计算成本（Token消耗）与用户交互体感之间进行关键权衡与决策。</li>
+                <li><strong>标准化与体系化沉淀：</strong>建立AI产品的性能评测体系（Benchmark）与交互范式，推动AI能力在政务咨询、企业内训等垂直领域的标准化落地与场景化复制。</li>
+            </ul>
+        </div>
+
+        <!-- 核心成果 -->
+        <div class="detail-section">
+            <h2><i class="fas fa-trophy"></i> 核心成果</h2>
+            <div class="metric-grid">
+                <div class="metric-card">
+                    <div class="value">&lt; 800ms</div>
+                    <div class="label">端到端响应延迟</div>
+                </div>
+                <div class="metric-card">
+                    <div class="value">≥ 95%</div>
+                    <div class="label">ASR准确率</div>
+                </div>
+                <div class="metric-card">
+                    <div class="value">&gt; 90%</div>
+                    <div class="label">意图识别率</div>
+                </div>
+                <div class="metric-card">
+                    <div class="value">-15%</div>
+                    <div class="label">Token消耗优化</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 技术架构 -->
+        <div class="detail-section">
+            <h2><i class="fas fa-cogs"></i> 技术架构</h2>
+            <h3>AI实时通话模块</h3>
+            <p>主导AI助理在音视频通话场景下的底层逻辑设计，涵盖多模态感知、长短期记忆及任务规划，确立了AI实时对话的技术标准。</p>
+
+            <h3>智能打断（Barge-in）体系</h3>
+            <p>设计并实现了"端云协同"的打断机制，通过前端VAD（语音活动检测）与后端流式熔断逻辑，支持用户自然抢话。在提升交互自然度的同时，降低了约15%的Token消耗。</p>
+
+            <h3>标准化组件</h3>
+            <p>沉淀了一套标准化的AI通话产品组件，支持政务讲解、企业内训等多个场景的快速配置与原型验收。</p>
+
+            <div class="tech-stack">
+                <span class="tech-item">RTC</span>
+                <span class="tech-item">Agent</span>
+                <span class="tech-item">VAD</span>
+                <span class="tech-item">多模态交互</span>
+                <span class="tech-item">Prompt工程</span>
+                <span class="tech-item">流式处理</span>
+                <span class="tech-item">Token优化</span>
+            </div>
+        </div>
+
+        <!-- AIGC模块 -->
+        <div class="detail-section">
+            <h2><i class="fas fa-robot"></i> AIGC自动化生产模块</h2>
+            <ul>
+                <li>负责AIGC模块Agent核心配置，实现播客全链路自动化生产</li>
+                <li>参与业务流程设计与梳理，绘制含Agent模块的全链路业务流程图</li>
+                <li>负责项目测试与优化，针对音色自然度、对话连贯性等指标进行迭代</li>
+            </ul>
+        </div>
+
+        <!-- 业务场景 -->
+        <div class="detail-section">
+            <h2><i class="fas fa-building"></i> 业务场景</h2>
+            <div class="timeline-item">
+                <div class="timeline-date">政务咨询场景</div>
+                <p>为政务大厅、咨询电话提供7x24小时智能咨询服务，支持政策讲解、办事指南等功能。</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">企业内训场景</div>
+                <p>为企业内部培训提供AI讲解员，支持新员工入职培训、业务知识普及等场景。</p>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">自动化播客</div>
+                <p>从文本/文档自动生成播客内容，支持单人/双人对话模式，可批量生产标准化内容。</p>
+            </div>
+        </div>
+
+        <!-- 项目文档下载 -->
+        <div class="detail-section">
+            <h2><i class="fas fa-file-pdf"></i> 项目文档</h2>
+            <p>点击下方链接查看完整的项目文档：</p>
+            <a href="中国移动"灵犀"AI项目文档.pdf" target="_blank" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1rem;">
+                <i class="fas fa-external-link-alt"></i> 查看完整项目文档（PDF）
+            </a>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">&lt;ZZQ /&gt;</div>
+                <div class="footer-social">
+                    <a href="tel:13241294350"><i class="fas fa-phone"></i></a>
+                    <a href="mailto:372790111@qq.com"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 张梓琪. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
