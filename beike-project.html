@@ -8,18 +8,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         .project-detail-header {
-            background: linear-gradient(135deg, rgba(0, 240, 255, 0.1), rgba(123, 44, 191, 0.1));
+            background: var(--bg-secondary);
             padding: 6rem 2rem 3rem;
             text-align: center;
-            border-bottom: 1px solid var(--accent-primary);
+            border-bottom: 1px solid var(--border);
             margin-top: 60px;
         }
 
         .project-detail-header h1 {
             font-size: 2.5rem;
-            color: var(--accent-primary);
+            color: var(--text-primary);
             margin-bottom: 1rem;
-            text-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
         }
 
         .project-detail-header .company {
@@ -36,14 +35,14 @@
             background: var(--accent-primary);
             color: var(--bg-primary);
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 8px;
             font-weight: 500;
             transition: all 0.3s;
         }
 
         .back-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(0, 240, 255, 0.4);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
         .project-detail-content {
@@ -61,7 +60,7 @@
         }
 
         .detail-section h2 {
-            color: var(--accent-primary);
+            color: var(--text-primary);
             font-size: 1.5rem;
             margin-bottom: 1.5rem;
             display: flex;
@@ -98,7 +97,7 @@
             content: '▹';
             position: absolute;
             left: 0;
-            color: var(--accent-primary);
+            color: var(--text-primary);
         }
 
         .phase-grid {
@@ -109,7 +108,7 @@
         }
 
         .phase-card {
-            background: rgba(0, 240, 255, 0.05);
+            background: var(--bg-secondary);
             border: 1px solid var(--border);
             border-radius: 10px;
             padding: 1.5rem;
@@ -119,7 +118,7 @@
         .phase-card:hover {
             border-color: var(--accent-primary);
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 240, 255, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         }
 
         .phase-card .phase-number {
@@ -151,11 +150,11 @@
 
         .tech-item {
             padding: 0.5rem 1rem;
-            background: rgba(123, 44, 191, 0.2);
-            border: 1px solid var(--accent-secondary);
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
             border-radius: 20px;
             font-size: 0.85rem;
-            color: var(--accent-secondary);
+            color: var(--text-primary);
         }
 
         .achievement-grid {
@@ -166,14 +165,14 @@
         }
 
         .achievement-item {
-            background: rgba(0, 240, 255, 0.05);
+            background: var(--bg-secondary);
             border-left: 3px solid var(--accent-primary);
             padding: 1rem;
             border-radius: 5px;
         }
 
         .achievement-item h4 {
-            color: var(--accent-primary);
+            color: var(--text-primary);
             margin-bottom: 0.5rem;
         }
 
@@ -236,7 +235,7 @@
         }
 
         .gallery-item {
-            background: rgba(0, 240, 255, 0.05);
+            background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 10px;
             overflow: hidden;
@@ -246,7 +245,7 @@
         .gallery-item:hover {
             border-color: var(--accent-primary);
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 240, 255, 0.15);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         }
 
         .gallery-item img {
@@ -266,7 +265,7 @@
         }
 
         .gallery-item .gallery-caption h4 {
-            color: var(--accent-primary);
+            color: var(--text-primary);
             font-size: 1rem;
             margin-bottom: 0.5rem;
         }
@@ -282,7 +281,7 @@
         }
 
         .gallery-section h3 {
-            color: var(--accent-primary);
+            color: var(--text-primary);
             font-size: 1.3rem;
             margin-bottom: 1.5rem;
             display: flex;
@@ -302,9 +301,6 @@
     </style>
 </head>
 <body>
-    <!-- 粒子背景 -->
-    <canvas id="particles"></canvas>
-
     <!-- 导航栏 -->
     <nav class="navbar">
         <div class="nav-container">
