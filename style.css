@@ -244,8 +244,25 @@ body {
 .sidebar-tagline {
     font-size: 0.9rem;
     color: var(--text-secondary);
-    margin: 0 0 2rem 0;
+    margin: 0 0 1.5rem 0;
     opacity: 0.8;
+}
+
+.sidebar-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.sidebar-tag {
+    padding: 0.3rem 0.7rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.75rem;
+    color: var(--text-primary);
+    font-weight: 500;
 }
 
 .sidebar-contact {
@@ -287,42 +304,6 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 3rem;
-}
-
-/* 核心标签 */
-.focus-tags {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-    width: 100%;
-}
-
-.focus-tag {
-    padding: 1rem;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-    transition: transform 0.3s, box-shadow 0.3s;
-    background: var(--text-primary);
-    color: var(--bg-primary);
-}
-
-.focus-tag:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-}
-
-.focus-tag .tag-label {
-    font-size: 1.1rem;
-    font-weight: 700;
-    letter-spacing: 0.3px;
-}
-
-.focus-tag .tag-desc {
-    font-size: 0.75rem;
-    opacity: 0.8;
 }
 
 /* CTA按钮组 */
@@ -331,6 +312,7 @@ body {
     gap: 1rem;
     width: 100%;
     align-items: center;
+    justify-content: center;
 }
 
 .cta-button {
@@ -383,12 +365,12 @@ body {
         margin: 0 auto 1.5rem;
     }
 
-    .sidebar-contact {
-        align-items: center;
+    .sidebar-tags {
+        justify-content: center;
     }
 
-    .focus-tags {
-        grid-template-columns: 1fr;
+    .sidebar-contact {
+        align-items: center;
     }
 
     .cta-group {
@@ -407,12 +389,8 @@ body {
         font-size: 1.6rem;
     }
 
-    .focus-tag .tag-label {
-        font-size: 1.2rem;
-    }
-
-    .focus-tag {
-        padding: 1.2rem;
+    .sidebar-tag {
+        font-size: 0.7rem;
     }
 }
 
