@@ -539,64 +539,59 @@ section {
 }
 
 /* ===== 工作经历 ===== */
-.timeline {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+.timeline-horizontal {
+    display: flex;
     gap: 1.5rem;
-    max-width: 1000px;
-    margin: 0 auto;
+    overflow-x: auto;
     padding: 2rem 0;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
 }
 
-.timeline-item {
-    position: relative;
+.timeline-horizontal::-webkit-scrollbar {
+    height: 6px;
 }
 
-.timeline-dot {
-    display: none;
+.timeline-horizontal::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+    border-radius: 3px;
 }
 
-.timeline-content {
+.timeline-horizontal::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 3px;
+}
+
+.timeline-horizontal::-webkit-scrollbar-thumb:hover {
+    background: var(--text-primary);
+}
+
+.timeline-card {
+    flex: 0 0 320px;
     background: var(--bg-card);
-    padding: 1.8rem;
     border-radius: 10px;
     border: 1px solid var(--border);
+    padding: 1.5rem;
+    scroll-snap-align: start;
     transition: all 0.3s;
-    height: 100%;
     display: flex;
     flex-direction: column;
 }
 
-.timeline-content.clickable {
+.timeline-card.clickable {
     cursor: pointer;
-    position: relative;
 }
 
-.timeline-content.clickable:hover {
-    border-color: var(--accent-primary);
+.timeline-card.clickable:hover {
+    border-color: var(--text-primary);
     transform: translateY(-3px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
 
-.timeline-content.clickable::after {
-    content: '点击查看详情 →';
-    position: absolute;
-    bottom: 1rem;
-    right: 1rem;
-    font-size: 0.75rem;
-    color: var(--text-secondary);
-    opacity: 0;
-    transition: opacity 0.3s;
-}
-
-.timeline-content.clickable:hover::after {
-    opacity: 1;
-}
-
-.timeline-date {
+.timeline-year {
     display: inline-block;
-    padding: 0.4rem 1rem;
-    background: var(--accent-primary);
+    padding: 0.4rem 0.8rem;
+    background: var(--text-primary);
     color: var(--bg-primary);
     border-radius: 6px;
     font-size: 0.8rem;
@@ -605,34 +600,36 @@ section {
     align-self: flex-start;
 }
 
-.timeline-content h3 {
-    font-size: 1.1rem;
-    margin-bottom: 0.4rem;
+.timeline-card h3 {
+    font-size: 1rem;
     font-weight: 600;
+    margin-bottom: 0.4rem;
+    color: var(--text-primary);
+    line-height: 1.4;
 }
 
-.position {
+.timeline-card .position {
     color: var(--text-secondary);
-    margin-bottom: 1rem;
     font-size: 0.85rem;
+    margin-bottom: 1rem;
 }
 
-.achievements {
+.timeline-card .achievements {
     list-style: none;
     margin-bottom: 1rem;
     flex-grow: 1;
 }
 
-.achievements li {
+.timeline-card .achievements li {
     position: relative;
     padding-left: 1.2rem;
     margin-bottom: 0.5rem;
     color: var(--text-secondary);
-    font-size: 0.82rem;
+    font-size: 0.8rem;
     line-height: 1.6;
 }
 
-.achievements li::before {
+.timeline-card .achievements li::before {
     content: '▹';
     position: absolute;
     left: 0;
@@ -640,26 +637,39 @@ section {
     font-weight: bold;
 }
 
-.tech-tags {
+.timeline-card .tech-tags {
     display: flex;
     gap: 0.5rem;
     flex-wrap: wrap;
     margin-top: auto;
 }
 
-.tech-tag {
-    padding: 0.35rem 0.7rem;
+.timeline-card .tech-tag {
+    padding: 0.3rem 0.6rem;
     background: var(--bg-secondary);
     border: 1px solid var(--border);
-    border-radius: 6px;
-    font-size: 0.75rem;
+    border-radius: 5px;
+    font-size: 0.7rem;
     color: var(--text-primary);
 }
 
 @media (max-width: 768px) {
-    .timeline {
-        grid-template-columns: 1fr;
-        gap: 1.2rem;
+    .timeline-horizontal {
+        gap: 1rem;
+        padding: 1.5rem 0;
+    }
+
+    .timeline-card {
+        flex: 0 0 280px;
+        padding: 1.2rem;
+    }
+
+    .timeline-card h3 {
+        font-size: 0.95rem;
+    }
+
+    .timeline-card .achievements li {
+        font-size: 0.78rem;
     }
 }
 
