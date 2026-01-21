@@ -567,24 +567,7 @@ section {
     padding: 3rem 0;
 }
 
-.timeline-line {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg,
-        var(--text-primary) 0%,
-        var(--text-primary) 25%,
-        var(--border) 25%,
-        var(--border) 50%,
-        var(--border) 50%,
-        var(--border) 75%,
-        var(--border) 75%,
-        var(--border) 100%
-    );
-    z-index: 1;
-}
+
 
 .timeline-horizontal {
     display: flex;
