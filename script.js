@@ -159,27 +159,56 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 const sections = document.querySelectorAll('section[id]');
 const floatingNavItems = document.querySelectorAll('.floating-nav-item');
 
-function updateActiveNav() {
-    const scrollPosition = window.scrollY + 100;
+// 获取所有有对应导航项的section id
+const navSectionIds = Array.from(floatingNavItems).map(item => item.getAttribute('data-target'));
 
+// 简化版滚动监听，确保能正确工作
+function updateActiveNav() {
+    // 使用兼容的scrollY获取方式
+    const scrollY = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    const scrollPosition = scrollY + 200; // 增加偏移量，提前激活
+    
+    let currentSection = '';
+    
+    // 遍历所有section
     sections.forEach(section => {
         const sectionTop = section.offsetTop;
         const sectionHeight = section.offsetHeight;
         const sectionId = section.getAttribute('id');
-
+        
+        // 检查滚动位置是否在当前section内
         if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-            floatingNavItems.forEach(item => {
+            currentSection = sectionId;
+        }
+    });
+    
+    // 如果滚动到页面底部，激活最后一个导航项
+    if (scrollPosition >= document.body.scrollHeight - window.innerHeight) {
+        currentSection = navSectionIds[navSectionIds.length - 1];
+    }
+    
+    // 更新导航项的active状态
+    floatingNavItems.forEach(item => {
+        const target = item.getAttribute('data-target');
+        
+        // 如果当前section有对应导航项，或者当前section没有对应导航项但找到了合适的
+        if (target === currentSection || (currentSection && navSectionIds.includes(currentSection) && target === currentSection)) {
+            item.classList.add('active');
+        } else {
+            // 对于没有对应section的导航项，保持默认
+            if (target === 'hero' && !currentSection) {
+                item.classList.add('active');
+            } else {
                 item.classList.remove('active');
-                if (item.getAttribute('data-target') === sectionId) {
-                    item.classList.add('active');
-                }
-            });
+            }
         }
     });
 }
 
+// 添加事件监听器
 window.addEventListener('scroll', updateActiveNav);
 window.addEventListener('load', updateActiveNav);
+window.addEventListener('resize', updateActiveNav);
 
 // ===== 导航栏滚动效果 =====
 let lastScroll = 0;
