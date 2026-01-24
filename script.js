@@ -201,30 +201,21 @@ document.querySelectorAll('.skill-tag').forEach(tag => {
     });
 });
 
-// ===== 项目卡片3D效果 - 优化版 =====
+// ===== 项目卡片悬停效果 - 简洁版 =====
+// 3D效果已由CSS处理，这里只添加额外的交互动画
 document.querySelectorAll('.project-card').forEach(card => {
-    let animationFrame;
-    
-    card.addEventListener('mousemove', (e) => {
-        cancelAnimationFrame(animationFrame);
-        
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        
-        const rotateX = (y - centerY) / 25;
-        const rotateY = (centerX - x) / 25;
-        
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
+    card.addEventListener('mouseenter', function() {
+        const icon = this.querySelector('.project-icon');
+        if (icon) {
+            icon.style.transform = 'scale(1.15) rotate(8deg)';
+        }
     });
 
-    card.addEventListener('mouseleave', () => {
-        animationFrame = requestAnimationFrame(() => {
-            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
-        });
+    card.addEventListener('mouseleave', function() {
+        const icon = this.querySelector('.project-icon');
+        if (icon) {
+            icon.style.transform = 'scale(1) rotate(0)';
+        }
     });
 });
 
