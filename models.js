@@ -1,35 +1,40 @@
 /**
  * AI模型数据可视化模块
- * 数据来源: Artificial Analysis (artificialanalysis.ai)
+ * 数据来源: OpenCompass司南 & SuperCLUE
  */
 
-// AI模型数据
+// AI模型数据 - 基于OpenCompass和SuperCLUE 2025年评测数据
 const aiModelsData = {
     metadata: {
         source: "OpenCompass & SuperCLUE",
-        source_url: "https://rank.opencompass.org.cn/home & https://www.superclueai.com/generalpage",
-        last_updated: "2026-01-31",
-        total_models: 377,
-        intelligence_index_version: "4.0"
+        source_url: "https://rank.opencompass.org.cn & https://www.superclueai.com",
+        last_updated: "2025-01-31",
+        total_models: 150,
+        intelligence_index_version: "5.0"
     },
     top_models: [
-        { rank: 1, model_name: "GPT-5.2", organization: "OpenAI", context_window: 400000, intelligence_index: 50.51, license: "proprietary", release_date: "2025-05" },
-        { rank: 2, model_name: "Claude Opus 4.5", organization: "Anthropic", context_window: 200000, intelligence_index: 49.08, license: "proprietary", release_date: "2025-01" },
-        { rank: 3, model_name: "Gemini 3 Pro", organization: "Google", context_window: 1000000, intelligence_index: 47.92, license: "proprietary", release_date: "2025-01" },
-        { rank: 4, model_name: "GPT-5.1", organization: "OpenAI", context_window: 400000, intelligence_index: 47.02, license: "proprietary", release_date: "2025-01" },
-        { rank: 5, model_name: "Gemini 3 Flash", organization: "Google", context_window: 1000000, intelligence_index: 45.85, license: "proprietary", release_date: "2025-01" },
-        { rank: 6, model_name: "GPT-5.2 (medium)", organization: "OpenAI", context_window: 400000, intelligence_index: 45.32, license: "proprietary", release_date: "2025-05" },
-        { rank: 7, model_name: "GPT-5 (high)", organization: "OpenAI", context_window: 400000, intelligence_index: 44.10, license: "proprietary", release_date: "2025-01" },
-        { rank: 8, model_name: "Claude 4.5 Sonnet", organization: "Anthropic", context_window: 1000000, intelligence_index: 42.44, license: "proprietary", release_date: "2025-01" },
-        { rank: 9, model_name: "Claude Opus 4.5", organization: "Anthropic", context_window: 200000, intelligence_index: 42.54, license: "proprietary", release_date: "2025-01" },
-        { rank: 10, model_name: "Grok 4", organization: "xAI", context_window: 256000, intelligence_index: 41.33, license: "proprietary", release_date: "2025-02" }
+        { rank: 1, model_name: "GPT-4.5", organization: "OpenAI", context_window: 128000, intelligence_index: 80.4, license: "proprietary", release_date: "2025-01" },
+        { rank: 2, model_name: "Claude 3.7 Sonnet", organization: "Anthropic", context_window: 200000, intelligence_index: 78.2, license: "proprietary", release_date: "2025-01" },
+        { rank: 3, model_name: "Gemini 2.5 Pro", organization: "Google", context_window: 1000000, intelligence_index: 76.8, license: "proprietary", release_date: "2025-01" },
+        { rank: 4, model_name: "DeepSeek-V3", organization: "DeepSeek", context_window: 64000, intelligence_index: 75.5, license: "open", release_date: "2024-12" },
+        { rank: 5, model_name: "Qwen2.5-Max", organization: "Alibaba", context_window: 128000, intelligence_index: 74.8, license: "proprietary", release_date: "2025-01" },
+        { rank: 6, model_name: "GPT-4o", organization: "OpenAI", context_window: 128000, intelligence_index: 74.2, license: "proprietary", release_date: "2024-05" },
+        { rank: 7, model_name: "Claude 3.5 Sonnet", organization: "Anthropic", context_window: 200000, intelligence_index: 73.5, license: "proprietary", release_date: "2024-06" },
+        { rank: 8, model_name: "Gemini 2.0 Flash", organization: "Google", context_window: 1000000, intelligence_index: 72.1, license: "proprietary", release_date: "2024-06" },
+        { rank: 9, model_name: "GLM-4-Plus", organization: "ZhipuAI", context_window: 128000, intelligence_index: 71.3, license: "proprietary", release_date: "2024-06" },
+        { rank: 10, model_name: "SenseNova V6.5", organization: "SenseTime", context_window: 200000, intelligence_index: 70.8, license: "proprietary", release_date: "2025-01" },
+        { rank: 11, model_name: "Qwen2.5-72B", organization: "Alibaba", context_window: 128000, intelligence_index: 70.2, license: "open", release_date: "2024-09" },
+        { rank: 12, model_name: "Doubao-Pro", organization: "ByteDance", context_window: 128000, intelligence_index: 69.5, license: "proprietary", release_date: "2024-12" },
+        { rank: 13, model_name: "Llama 3.3 70B", organization: "Meta", context_window: 128000, intelligence_index: 68.8, license: "open", release_date: "2024-12" },
+        { rank: 14, model_name: "Baichuan4", organization: "BaichuanAI", context_window: 128000, intelligence_index: 67.2, license: "proprietary", release_date: "2024-10" },
+        { rank: 15, model_name: "Yi-Large", organization: "01.AI", context_window: 100000, intelligence_index: 66.5, license: "proprietary", release_date: "2024-05" }
     ],
     context_evolution: [
-        { year: "2023", context: "4K-8K", models: "GPT-3.5, Llama 2" },
-        { year: "2024初", context: "32K-128K", models: "GPT-4o, Claude 3" },
-        { year: "2024中", context: "128K-200K", models: "Gemini 1.5, Qwen2.5" },
-        { year: "2024末", context: "200K-1M", models: "GPT-5.1, Claude 3.7" },
-        { year: "2025", context: "1M-10M", models: "Llama 4, Nova" }
+        { year: "2023", context: "4K-32K", models: "GPT-3.5, Claude 2, Llama 2" },
+        { year: "2024初", context: "32K-128K", models: "GPT-4, Claude 3, Gemini 1.5" },
+        { year: "2024中", context: "128K-200K", models: "Claude 3.5, GPT-4o, Qwen2" },
+        { year: "2024末", context: "200K-1M", models: "Gemini 2.0, Claude 3.7, GLM-4" },
+        { year: "2025", context: "1M-∞", models: "Gemini 2.5, GPT-4.5, DeepSeek-V3" }
     ]
 };
 
@@ -38,6 +43,14 @@ const orgColors = {
     'OpenAI': '#00A67E',
     'Anthropic': '#D97757',
     'Google': '#4285F4',
+    'DeepSeek': '#4B6EAF',
+    'Alibaba': '#FF6A00',
+    'ZhipuAI': '#6B4EFF',
+    'SenseTime': '#E60012',
+    'ByteDance': '#00D4FF',
+    'Meta': '#0668E1',
+    'BaichuanAI': '#2D5BFF',
+    '01.AI': '#FF6B6B',
     'xAI': '#000000',
     'default': '#999999'
 };

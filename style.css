@@ -542,6 +542,14 @@ section {
     background: #4285F4;
 }
 
+.legend-dot.deepseek {
+    background: #4B6EAF;
+}
+
+.legend-dot.alibaba {
+    background: #FF6A00;
+}
+
 .legend-dot.other {
     background: var(--text-tertiary);
 }

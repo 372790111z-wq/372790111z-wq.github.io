@@ -160,6 +160,36 @@
             <p class="section-desc">作为AI产品经理，对主流大模型的技术选型思考与对比分析</p>
         </div>
         <div class="models-content">
+            <!-- 筛选器 -->
+            <div class="model-filters">
+                <div class="filter-group">
+                    <label>发布机构</label>
+                    <select id="modelOrgFilter">
+                        <option value="all">全部机构</option>
+                        <option value="OpenAI">OpenAI</option>
+                        <option value="Anthropic">Anthropic</option>
+                        <option value="Google">Google</option>
+                        <option value="DeepSeek">DeepSeek</option>
+                        <option value="Alibaba">阿里巴巴</option>
+                        <option value="ZhipuAI">智谱AI</option>
+                        <option value="SenseTime">商汤</option>
+                        <option value="ByteDance">字节跳动</option>
+                        <option value="Meta">Meta</option>
+                        <option value="BaichuanAI">百川智能</option>
+                        <option value="01.AI">零一万物</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>发布时间</label>
+                    <select id="modelYearFilter">
+                        <option value="all">全部年份</option>
+                        <option value="2025" selected>2025年</option>
+                        <option value="2024">2024年</option>
+                        <option value="2023">2023年</option>
+                    </select>
+                </div>
+            </div>
+
             <!-- 坐标图 -->
             <div class="models-chart-container">
                 <div class="chart-legend">
@@ -176,6 +206,14 @@
                         <span>Google</span>
                     </div>
                     <div class="legend-item">
+                        <span class="legend-dot deepseek"></span>
+                        <span>DeepSeek</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-dot alibaba"></span>
+                        <span>阿里</span>
+                    </div>
+                    <div class="legend-item">
                         <span class="legend-dot other"></span>
                         <span>其他</span>
                     </div>
@@ -184,32 +222,6 @@
                     <canvas id="modelsCanvas"></canvas>
                 </div>
                 <div class="chart-tooltip" id="chartTooltip"></div>
-            </div>
-
-            <!-- 筛选器 -->
-            <div class="model-filters">
-                <div class="filter-group">
-                    <label>发布机构</label>
-                    <select id="modelOrgFilter">
-                        <option value="all">全部机构</option>
-                        <option value="OpenAI">OpenAI</option>
-                        <option value="Anthropic">Anthropic</option>
-                        <option value="Google">Google</option>
-                        <option value="DeepSeek">DeepSeek</option>
-                        <option value="Alibaba">阿里</option>
-                        <option value="Meta">Meta</option>
-                        <option value="xAI">xAI</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label>发布时间</label>
-                    <select id="modelYearFilter">
-                        <option value="all">全部年份</option>
-                        <option value="2025" selected>2025</option>
-                        <option value="2024">2024</option>
-                        <option value="2023">2023</option>
-                    </select>
-                </div>
             </div>
 
 
