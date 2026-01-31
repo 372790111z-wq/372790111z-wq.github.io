@@ -191,13 +191,13 @@ function renderScatterChart(models) {
             radius: 8
         });
     });
-    
+
     // 添加鼠标交互
     canvas.onmousemove = (e) => {
         const rect = canvas.getBoundingClientRect();
         const mouseX = e.clientX - rect.left;
         const mouseY = e.clientY - rect.top;
-        
+
         let found = null;
         for (const point of points) {
             const distance = Math.sqrt((mouseX - point.x) ** 2 + (mouseY - point.y) ** 2);
@@ -206,7 +206,7 @@ function renderScatterChart(models) {
                 break;
             }
         }
-        
+
         if (found) {
             tooltip.innerHTML = `
                 <div class="tooltip-model">${found.model.model_name}</div>
@@ -223,35 +223,38 @@ function renderScatterChart(models) {
                 </div>
             `;
 
+            // 获取容器位置
+            const containerRect = canvas.parentElement.getBoundingClientRect();
+
+            // 计算tooltip相对于容器的位置（使用鼠标位置）
+            let tooltipX = e.clientX - containerRect.left + 15;
+            let tooltipY = e.clientY - containerRect.top - 10;
+
             // 先显示tooltip以获取其尺寸
             tooltip.classList.add('visible');
-
-            // 计算tooltip相对于容器的位置
-            let tooltipX = found.x + 20;
-            let tooltipY = found.y - 10;
 
             // 获取tooltip实际尺寸
             const tooltipWidth = tooltip.offsetWidth;
             const tooltipHeight = tooltip.offsetHeight;
 
             // 检查是否超出右侧边界
-            if (tooltipX + tooltipWidth > width - padding.right) {
-                tooltipX = found.x - tooltipWidth - 20;
+            if (tooltipX + tooltipWidth > containerRect.width) {
+                tooltipX = e.clientX - containerRect.left - tooltipWidth - 15;
             }
 
             // 检查是否超出左侧边界
-            if (tooltipX < padding.left) {
-                tooltipX = padding.left;
+            if (tooltipX < 0) {
+                tooltipX = 15;
             }
 
             // 检查是否超出顶部边界
-            if (tooltipY < padding.top) {
-                tooltipY = found.y + 20;
+            if (tooltipY < 0) {
+                tooltipY = e.clientY - containerRect.top + 20;
             }
 
             // 检查是否超出底部边界
-            if (tooltipY + tooltipHeight > height - padding.bottom) {
-                tooltipY = height - padding.bottom - tooltipHeight - 10;
+            if (tooltipY + tooltipHeight > containerRect.height) {
+                tooltipY = containerRect.height - tooltipHeight - 10;
             }
 
             tooltip.style.left = tooltipX + 'px';
@@ -262,7 +265,7 @@ function renderScatterChart(models) {
             canvas.style.cursor = 'default';
         }
     };
-    
+
     canvas.onmouseleave = () => {
         tooltip.classList.remove('visible');
     };
