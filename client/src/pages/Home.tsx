@@ -4,6 +4,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ArrowDown, ArrowUp, ArrowUpRight, Github, Mail, MoveRight } from "lucide-react";
 import CaseOverlay from "@/components/CaseOverlay";
+import zijianCover from "@/assets/zijian-typewriter.jpg";
 
 const heroArt = "/manus-storage/zzq-hero-illustration_402fa124.png";
 const rtcArt = "/manus-storage/zzq-project-rtc_531fb7ee.png";
@@ -233,7 +234,7 @@ export default function Home() {
                 <span>我搭建的视觉 Skill 样张库。<br />按风格浏览作者示例，找到合适的创作工具。</span>
                 <span className="visit">打开纸间 ↗</span>
               </div>
-              <div className="paper-mark" aria-hidden="true"><small>ZIJIAN / VOL. 01</small><strong>纸间</strong><span>视觉创作 · 风格收藏</span></div>
+              <div className="paper-mark" aria-hidden="true"><small>ZIJIAN / VOL. 01</small><img src={zijianCover} width={640} height={640} alt="" loading="lazy" decoding="async" /><span>视觉创作 · 风格收藏</span></div>
               <span className="case-arrow" aria-hidden="true"><ArrowUpRight size={20} strokeWidth={1.5} /></span>
             </a>
           </div>
