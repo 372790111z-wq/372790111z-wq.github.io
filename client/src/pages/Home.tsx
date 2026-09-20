@@ -9,11 +9,12 @@ const heroArt = "/manus-storage/zzq-hero-illustration_402fa124.png";
 const rtcArt = "/manus-storage/zzq-project-rtc_531fb7ee.png";
 const agentArt = "/manus-storage/zzq-project-agent_95688352.png";
 
-type TabKey = "products" | "skills" | "writing" | "about" | "contact";
+type TabKey = "products" | "skills" | "portfolio" | "writing" | "about" | "contact";
 
 const tabs: { key: TabKey; label: string }[] = [
   { key: "products", label: "案例" },
   { key: "skills", label: "Skills" },
+  { key: "portfolio", label: "作品集" },
   { key: "writing", label: "写作" },
   { key: "about", label: "关于我" },
   { key: "contact", label: "交流" },
@@ -177,6 +178,21 @@ export default function Home() {
             {tabs.map((tab) => (
               <button
                 key={tab.key}
+                id={`tab-${tab.key}`}
+                type="button"
+                aria-controls={`panel-${tab.key}`}
+                tabIndex={activeTab === tab.key ? 0 : -1}
+                onKeyDown={(event) => {
+                  const index = tabs.findIndex((item) => item.key === tab.key);
+                  const next = event.key === "ArrowRight" ? (index + 1) % tabs.length
+                    : event.key === "ArrowLeft" ? (index + tabs.length - 1) % tabs.length
+                    : event.key === "Home" ? 0 : event.key === "End" ? tabs.length - 1 : -1;
+                  if (next < 0) return;
+                  event.preventDefault();
+                  setActiveTab(tabs[next].key);
+                  document.getElementById(`tab-${tabs[next].key}`)?.focus({ preventScroll: true });
+                  document.getElementById(`tab-${tabs[next].key}`)?.scrollIntoView({ block: "nearest", inline: "nearest" });
+                }}
                 className={activeTab === tab.key ? "is-active" : ""}
                 onClick={() => setActiveTab(tab.key)}
                 role="tab"
@@ -189,7 +205,7 @@ export default function Home() {
         </div>
 
         {activeTab === "products" && (
-          <div className="case-list">
+          <div className="case-list" id="panel-products" role="tabpanel" aria-labelledby="tab-products">
             {cases.map((item, index) => (
               <button className="case-row" key={item.no} type="button" onClick={() => openCase(item.slug)}>
                 <span className="case-no">{item.no}</span>
@@ -205,8 +221,26 @@ export default function Home() {
           </div>
         )}
 
+        {activeTab === "portfolio" && (
+          <div className="case-list" id="panel-portfolio" role="tabpanel" aria-labelledby="tab-portfolio">
+            <a className="case-row portfolio-row" data-annotation-id="portfolio-zijian-link"
+              href="https://zijian.fuluoyide.top/" target="_blank" rel="noopener noreferrer"
+              aria-label="打开纸间 · 视觉创作工具库（新标签页）">
+              <span className="case-no">01</span>
+              <div className="case-copy">
+                <p>PERSONAL PROJECT / WEBSITE</p>
+                <h3>纸间<span className="title-separator"> · </span><span className="title-detail">视觉创作工具库</span></h3>
+                <span>我搭建的视觉 Skill 样张库。<br />按风格浏览作者示例，找到合适的创作工具。</span>
+                <span className="visit">打开纸间 ↗</span>
+              </div>
+              <div className="paper-mark" aria-hidden="true"><small>ZIJIAN / VOL. 01</small><strong>纸间</strong><span>视觉创作 · 风格收藏</span></div>
+              <span className="case-arrow" aria-hidden="true"><ArrowUpRight size={20} strokeWidth={1.5} /></span>
+            </a>
+          </div>
+        )}
+
         {activeTab === "skills" && (
-          <div className="detail-panel skills-panel">
+          <div className="detail-panel skills-panel" id="panel-skills" role="tabpanel" aria-labelledby="tab-skills">
             <p className="panel-no">01—04</p>
             <div>
               <h3>把“能做”组织成<br />“值得用”的系统。</h3>
@@ -221,7 +255,7 @@ export default function Home() {
         )}
 
         {activeTab === "writing" && (
-          <div className="detail-panel writing-panel">
+          <div className="detail-panel writing-panel" id="panel-writing" role="tabpanel" aria-labelledby="tab-writing">
             <p className="panel-no">FIELD NOTES</p>
             <div className="writing-links">
               <a href="https://www.xiaohongshu.com/user/profile/5936839d5e87e754cdabc496" target="_blank" rel="noreferrer"><span>01</span> 小红书：AI 产品经理的日常思考 <MoveRight size={18} /></a>
@@ -232,17 +266,19 @@ export default function Home() {
         )}
 
         {activeTab === "about" && (
-          <div className="detail-panel about-panel">
-            <p className="panel-no">10+ YEARS</p>
+          <div className="detail-panel about-panel" id="panel-about" role="tabpanel" aria-labelledby="tab-about">
+            <p className="panel-no">ABOUT / ZZQ</p>
             <div>
-              <h3>AI 产品经理<br />与架构设计师。</h3>
-              <p>10 年产品经验，持续在 AIGC、RTC 与 Agent 的交汇处工作。关注复杂能力如何被解释、被使用，并最终成为真实用户的价值。</p>
+              <h3>张梓琪<br />AI 产品与个人实践。</h3>
+              <p>从产品经历到个人项目，了解我正在做的事情。</p>
+              <a className="about-visit" data-annotation-id="about-personal-site-link"
+                href="https://portfolio.fuluoyide.top/" target="_blank" rel="noopener noreferrer">查看完整个人网站 ↗</a>
             </div>
           </div>
         )}
 
         {activeTab === "contact" && (
-          <div className="detail-panel contact-panel">
+          <div className="detail-panel contact-panel" id="panel-contact" role="tabpanel" aria-labelledby="tab-contact">
             <p className="panel-no">LET’S TALK</p>
             <div>
               <h3>一起把想法<br />做成下一步。</h3>
