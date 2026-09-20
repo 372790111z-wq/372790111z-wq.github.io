@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>标注归档</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 900px; margin: 40px auto; padding: 0 20px; color: #333; }
+  h1 { color: #e53e3e; }
+  .version { border: 1px solid #eee; border-radius: 8px; padding: 16px; margin-bottom: 12px; }
+  .version h2 { margin: 0 0 8px; font-size: 16px; }
+  .version-meta { color: #888; font-size: 12px; margin-bottom: 12px; }
+  .req { background: #fafafa; border-radius: 6px; padding: 10px; margin-top: 8px; }
+  .req-title { font-weight: 600; color: #e53e3e; margin-bottom: 4px; }
+  .req-prd { white-space: pre-wrap; font-size: 13px; line-height: 1.6; }
+  .annotations { margin-top: 6px; font-size: 11px; color: #666; }
+  .annotations code { background: #f0f0f0; padding: 1px 4px; border-radius: 3px; }
+  .empty { color: #999; text-align: center; padding: 40px; }
+</style>
+</head>
+<body>
+<h1>📦 标注归档</h1>
+<p style="color:#666;font-size:13px">归档里的标注数据保留了完整 PRD 和 selector 信息，但不会在原页面上显示红框（因为代码已经变了）。</p>
+<div id="archive-list"><div class="empty">加载中...</div></div>
+<script>
+(async function() {
+  const list = document.getElementById('archive-list');
+  try {
+    const res = await fetch('/annotations/index.json');
+    const index = await res.json();
+    const archive = index.archive || [];
+    if (archive.length === 0) { list.innerHTML = '<div class="empty">暂无归档</div>'; return; }
+    const versions = await Promise.all(archive.map(async v => {
+      const r = await fetch(`/annotations/archive/${v.id}.json`);
+      return r.ok ? await r.json() : null;
+    }));
+    list.innerHTML = versions.filter(Boolean).map(v => `
+      <div class="version">
+        <h2>${v.label}</h2>
+        <div class="version-meta">版本 ID: ${v.id}</div>
+        ${(v.requirements || []).map(r => `
+          <div class="req">
+            <div class="req-title">${r.label}</div>
+            <div class="req-prd">${(r.fullPrdContent || r.prdContent || '').replace(/</g,'&lt;')}</div>
+            <div class="annotations">标注点：${(r.annotations || []).map(a => `<code>${a.label || a.selector}</code>`).join('、')}</div>
+          </div>
+        `).join('')}
+      </div>
+    `).join('');
+  } catch (err) {
+    list.innerHTML = '<div class="empty">加载失败</div>';
+  }
+})();
+</script>
+</body>
+</html>

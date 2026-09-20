@@ -9,7 +9,7 @@ export default defineConfig({
   plugins: [react(), tailwindcss(), {
     name: "local-preview-without-analytics",
     apply: "serve",
-    transformIndexHtml: { order: "pre", handler: (html) => html.replace(/<script\s+defer[\s\S]*?<\/script>/, "") },
+    transformIndexHtml: { order: "pre", handler: (html) => html.replace(/<script\s+defer[\s\S]*?<\/script>/, "").replace("</body>", `<script>if(new URLSearchParams(location.search).has('annotations')){const s=document.createElement('script');s.src='/annotation-overlay.js';document.body.append(s)}</script></body>`) },
   }],
   resolve: { alias: { "@": path.resolve(import.meta.dirname, "client/src"), "@shared": path.resolve(import.meta.dirname, "shared") } },
   build: { outDir: path.resolve(import.meta.dirname, "dist/public"), emptyOutDir: true },
