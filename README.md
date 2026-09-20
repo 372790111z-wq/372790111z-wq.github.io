@@ -6,7 +6,7 @@
 
 使用项目锁定包管理器 `pnpm@10.4.1`。安装：`pnpm install --frozen-lockfile --ignore-scripts`。
 开发：`pnpm dev:static`，地址 http://127.0.0.1:18933/ 。
-构建：`pnpm build:static`。检查：`pnpm check`。
+构建前将 `.env.example` 复制为 `.env.production.local`（仅含原站公开统计配置）。构建：`pnpm build:static`。检查：`pnpm check`。
 
 `vite.static.config.ts` 是不依赖 Manus 存储服务的静态构建入口；原配置保留。图片和公开 PDF 从部署仓库 8927f70 恢复。
 生产统计参数应从现有公开页面核对后配置，禁止在仓库加入私有凭据。
