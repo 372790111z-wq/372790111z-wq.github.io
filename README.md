@@ -1,6 +1,13 @@
 # 个人主站源码
 
-用户提供的 Manus 源码为基线，恢复到本地独立 Git 仓库。没有配置远端；下载原件保持不变。
+本仓库 `source` 分支保存个人主站的完整 React / TypeScript 源码，包括已上线的作品集和关于我入口。
+
+仓库：https://github.com/372790111z-wq/372790111z-wq.github.io/tree/source
+正式网站：https://fuluoyide.top/
+
+`main` 保留原有静态发布内容；本分支不自动部署到 Vercel。不要直接将本分支合并到 main，部署流程需先统一。
+
+源码以用户提供的 Manus 导出为基线，下载原件未修改。
 
 ## 本地开发
 
