@@ -442,9 +442,13 @@ a { color: inherit; text-decoration: none; }
 .portfolio-row .case-copy>span{font-size:14px}.portfolio-row .case-copy>.visit{display:inline-block;font-size:12px;color:#333}
 .portfolio-row{grid-template-columns:70px minmax(0,1fr) 220px 32px;min-height:310px}
 .paper-mark{width:204px;display:flex;flex-direction:column;gap:13px;padding:14px;background:#f1eee2;border:1px solid #d2cfc1;transform:rotate(-5deg);box-shadow:5px 8px 0 #ebe8dd;color:#504638}.paper-mark small{font:8px/1.5 monospace;letter-spacing:1px}.paper-mark img{display:block;width:100%;height:auto;aspect-ratio:1;object-fit:contain}.paper-mark span{font-size:9px;border-top:1px solid #b6afa0;padding-top:9px}
+.article-mark{transform:rotate(-4deg)}.article-poster{height:220px;overflow:hidden;background:#f5f3ec}.article-mark .article-poster img{width:100%;height:100%;aspect-ratio:auto;object-fit:cover;object-position:center 52%;transform:scale(1.38)}
+.writing-link-copy{display:flex;flex-direction:column;gap:7px;min-width:0}.writing-links a .writing-link-copy{color:#151515;font:inherit;letter-spacing:inherit}.writing-link-copy strong{font:inherit}.writing-link-copy small{color:#85847f;font:400 10px/1.3 "DM Mono","Noto Sans SC",monospace;letter-spacing:.02em}
+.accent-dot{color:#e45b43}
 .tab-list button:focus-visible,a:focus-visible{outline:2px solid #333;outline-offset:5px}
 @media(min-width:801px) and (max-width:1250px){.work-layout{display:block}.work-heading-wrap h2{margin-bottom:35px}.tab-list{gap:30px}.tab-list button{font-size:23px}}
 .portfolio-row .case-copy>span{font-family:"Noto Sans SC",Arial,sans-serif;letter-spacing:0}
 @media(max-width:800px){.title-separator{display:none}.title-detail{display:block;font-size:23px;margin-top:6px}.portfolio-row .case-copy>span{font-size:12px}.portfolio-row .case-copy>.visit{margin-top:18px}}
 .about-visit{display:inline-block;margin-top:28px;padding-bottom:5px;border-bottom:1px solid currentColor;font-size:14px}.about-panel{padding-bottom:50px}
 @media(max-width:800px){.portfolio-row{min-height:245px;grid-template-columns:27px minmax(0,1fr) 25px;row-gap:25px}.portfolio-row .case-copy h3{font-size:25px}.portfolio-row .case-copy>span{font-size:12px;line-height:1.85;margin-top:12px}.portfolio-row .case-copy p{font-size:9px}.portfolio-row .case-no{align-self:start;margin-top:4px}.portfolio-row .case-copy{grid-column:2}.portfolio-row .case-arrow{grid-column:3;grid-row:1}.portfolio-row .paper-mark{display:flex;grid-column:2;grid-row:2;width:164px;justify-self:start;margin:0 0 12px 8px;gap:10px;padding:12px;transform:rotate(-4deg)}}
+@media(max-width:800px){.article-poster{height:185px}.writing-links a{min-height:92px}.writing-link-copy small{font-size:9px}}

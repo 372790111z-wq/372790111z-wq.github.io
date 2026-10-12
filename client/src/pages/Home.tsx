@@ -5,6 +5,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ArrowDown, ArrowUp, ArrowUpRight, Github, Mail, MoveRight } from "lucide-react";
 import CaseOverlay from "@/components/CaseOverlay";
 import zijianCover from "@/assets/zijian-typewriter.jpg";
+import articleCover from "@/assets/article-cover-zine.png";
+import { contentPlatforms } from "@/lib/contentPlatforms";
 
 const heroArt = "/manus-storage/zzq-hero-illustration_402fa124.png";
 const rtcArt = "/manus-storage/zzq-project-rtc_531fb7ee.png";
@@ -16,7 +18,7 @@ const tabs: { key: TabKey; label: string }[] = [
   { key: "products", label: "案例" },
   { key: "skills", label: "Skills" },
   { key: "portfolio", label: "作品集" },
-  { key: "writing", label: "写作" },
+  { key: "writing", label: "内容平台" },
   { key: "about", label: "关于我" },
   { key: "contact", label: "交流" },
 ];
@@ -198,6 +200,7 @@ export default function Home() {
                 onClick={() => setActiveTab(tab.key)}
                 role="tab"
                 aria-selected={activeTab === tab.key}
+                data-annotation-id={tab.key === "writing" ? "content-platform-tab" : undefined}
               >
                 {tab.label}
               </button>
@@ -237,6 +240,19 @@ export default function Home() {
               <div className="paper-mark" aria-hidden="true"><small>ZIJIAN / VOL. 01</small><img src={zijianCover} width={640} height={640} alt="" loading="lazy" decoding="async" /><span>视觉创作 · 风格收藏</span></div>
               <span className="case-arrow" aria-hidden="true"><ArrowUpRight size={20} strokeWidth={1.5} /></span>
             </a>
+            <a className="case-row portfolio-row" data-annotation-id="portfolio-article-link"
+              href="https://blog.fuluoyide.top/" target="_blank" rel="noopener noreferrer"
+              aria-label="打开文章 · AI 产品与实践记录（新标签页）">
+              <span className="case-no">02</span>
+              <div className="case-copy">
+                <p>PERSONAL PROJECT / WRITING</p>
+                <h3>文章<span className="title-separator"> · </span><span className="title-detail">AI 产品与实践记录</span></h3>
+                <span>把真实过程写成文章。<br />从产品判断到工具实践，留下完整记录。</span>
+                <span className="visit">打开文章 ↗</span>
+              </div>
+              <div className="paper-mark article-mark" aria-hidden="true"><small>FIELD NOTES / VOL. 01</small><div className="article-poster"><img src={articleCover} width={971} height={1619} alt="" loading="lazy" decoding="async" /></div><span>文章 · 图片 · 视频</span></div>
+              <span className="case-arrow" aria-hidden="true"><ArrowUpRight size={20} strokeWidth={1.5} /></span>
+            </a>
           </div>
         )}
 
@@ -257,11 +273,15 @@ export default function Home() {
 
         {activeTab === "writing" && (
           <div className="detail-panel writing-panel" id="panel-writing" role="tabpanel" aria-labelledby="tab-writing">
-            <p className="panel-no">FIELD NOTES</p>
+            <p className="panel-no">CONTENT PLATFORMS</p>
             <div className="writing-links">
-              <a href="https://www.xiaohongshu.com/user/profile/5936839d5e87e754cdabc496" target="_blank" rel="noreferrer"><span>01</span> 小红书：AI 产品经理的日常思考 <MoveRight size={18} /></a>
-              <a href="https://www.woshipm.com/u/1142895" target="_blank" rel="noreferrer"><span>02</span> 人人都是产品经理：技术选型实践 <MoveRight size={18} /></a>
-              <a href="https://www.zhihu.com/people/li-jia-tu-47-46" target="_blank" rel="noreferrer"><span>03</span> 知乎：关于 AI 产品落地的思考 <MoveRight size={18} /></a>
+              {contentPlatforms.map((platform, index) => (
+                <a key={platform.href} href={platform.href} target="_blank" rel="noopener noreferrer">
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <span className="writing-link-copy"><strong>{platform.name}</strong><small>{platform.description}</small></span>
+                  <MoveRight size={18} aria-hidden="true" />
+                </a>
+              ))}
             </div>
           </div>
         )}
