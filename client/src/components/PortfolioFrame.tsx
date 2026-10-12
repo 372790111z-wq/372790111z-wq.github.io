@@ -9,7 +9,7 @@ const links = [
   ["案例", "/#work"],
   ["模型", "/models"],
   ["关于", "/about"],
-  ["写作", "/writing"],
+  ["内容平台", "/writing"],
   ["联系", "/contact"],
 ];
 

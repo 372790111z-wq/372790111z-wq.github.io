@@ -4,6 +4,7 @@
 import type { ReactNode } from "react";
 import { ArrowUpRight, Mail, Phone } from "lucide-react";
 import PortfolioFrame from "@/components/PortfolioFrame";
+import { contentPlatforms } from "@/lib/contentPlatforms";
 
 type PageHeaderProps = { index: string; kicker: string; title: ReactNode; deck: string };
 
@@ -70,19 +71,13 @@ export function AboutPage() {
 }
 
 export function WritingPage() {
-  const entries = [
-    ["小红书", "AI 产品经理的日常思考", "产品思考 · 2024", "https://www.xiaohongshu.com/user/profile/5936839d5e87e754cdabc496"],
-    ["人人都是产品经理", "AI 产品的技术选型实践", "方法论 · 2024", "https://www.woshipm.com/u/1142895"],
-    ["知乎", "关于 AI 产品落地的思考", "深度回答 · 2024", "https://www.zhihu.com/people/li-jia-tu-47-46"],
-    ["简书", "产品与职场随笔", "随笔 · 2024", "https://www.jianshu.com/u/cac8fe6b5adc"],
-  ];
   return (
     <PortfolioFrame index="04">
       <section className="studio-page">
-        <PageHeader index="04" kicker="FIELD NOTES" title={<>写下正在形成的<br />产品判断。</>} deck="关于模型选型、产品落地与工作实践的公开记录。" />
+        <PageHeader index="04" kicker="CONTENT PLATFORMS" title={<>内容平台<span className="accent-dot">.</span></>} deck="从产品思考到工具实践，在这些平台持续记录。" />
         <section className="writing-index">
-          {entries.map(([source, title, meta, href], index) => (
-            <a key={href} href={href} target="_blank" rel="noreferrer"><span>0{index + 1}</span><p>{source}</p><div><h2>{title}</h2><small>{meta}</small></div><ArrowUpRight size={20} strokeWidth={1.4} /></a>
+          {contentPlatforms.map((platform, index) => (
+            <a key={platform.href} href={platform.href} target="_blank" rel="noopener noreferrer"><span>0{index + 1}</span><p>PLATFORM / {String(index + 1).padStart(2, "0")}</p><div><h2>{platform.name}</h2><small>{platform.description}</small></div><ArrowUpRight size={20} strokeWidth={1.4} /></a>
           ))}
         </section>
       </section>
