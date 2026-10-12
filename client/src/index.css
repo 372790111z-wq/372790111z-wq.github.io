@@ -452,3 +452,7 @@ a { color: inherit; text-decoration: none; }
 .about-visit{display:inline-block;margin-top:28px;padding-bottom:5px;border-bottom:1px solid currentColor;font-size:14px}.about-panel{padding-bottom:50px}
 @media(max-width:800px){.portfolio-row{min-height:245px;grid-template-columns:27px minmax(0,1fr) 25px;row-gap:25px}.portfolio-row .case-copy h3{font-size:25px}.portfolio-row .case-copy>span{font-size:12px;line-height:1.85;margin-top:12px}.portfolio-row .case-copy p{font-size:9px}.portfolio-row .case-no{align-self:start;margin-top:4px}.portfolio-row .case-copy{grid-column:2}.portfolio-row .case-arrow{grid-column:3;grid-row:1}.portfolio-row .paper-mark{display:flex;grid-column:2;grid-row:2;width:164px;justify-self:start;margin:0 0 12px 8px;gap:10px;padding:12px;transform:rotate(-4deg)}}
 @media(max-width:800px){.article-poster{height:185px}.writing-links a{min-height:92px}.writing-link-copy small{font-size:9px}}
+
+/* Show the entire approved article artwork in the portfolio card. */
+.article-poster{height:auto;overflow:visible}
+.article-mark .article-poster img{width:100%;height:auto;aspect-ratio:971/1619;object-fit:contain;object-position:center;transform:none}
