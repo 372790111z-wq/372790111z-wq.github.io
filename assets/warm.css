@@ -1,0 +1,19 @@
+/* Zi editorial direction: paper, measured grid, spare product imagery. */
+:root{--bg:#F3EFE5;--panel:#FCFAF4;--panel2:#E9E3D7;--ink:#24231F;--soft:#5F5C53;--muted:#777166;--line:#CFC7B8;--copper:#A66B4C;--sage:#64745D}
+body{background-color:var(--bg);background-image:linear-gradient(#E2DBCF 1px,transparent 1px),linear-gradient(90deg,#E2DBCF 1px,transparent 1px);background-size:44px 44px;color:var(--ink)}
+::selection{background:#DDE4D7;color:var(--ink)}
+.header{background:rgba(243,239,229,.92);border-color:#D6CEC0}
+.identity{gap:0}.identity img{width:65px;height:50px}
+.header nav{color:#4B4A43}.header nav a:hover,.header-action:hover{color:var(--sage)}
+.header-action{border-color:#868073;color:var(--ink)}.lang-switch{color:var(--ink);border-color:#AFA698}.lang-switch:hover{border-color:var(--ink)}
+.micro{color:#6E6B61}.intro-rail{border-color:#CFC7B8}.intro h1{font-weight:650}.intro h1 small{color:#7B8773}.copper{color:var(--copper)}
+.intro-copy>div p{color:#55564E}.intro-copy .rule{background:var(--sage)}.scroll-note{border-color:#CFC7B8;color:#57574F}
+.product-section{background:#EDE8DC;border-color:#CFC7B8}.section-top p{color:#666257}
+.product-browser{border-color:#BAB1A3;box-shadow:14px 14px 0 rgba(118,108,91,.07)}.product-index{background:#F9F6EF;border-color:#BAB1A3}.product-tab{border-color:#D8D1C5;color:var(--ink)}.product-tab:hover{background:#EEE8DC}.product-tab.is-active{background:#E4E6DA;box-shadow:inset 4px 0 0 var(--sage)}
+.tab-number{color:var(--sage)}.tab-main small{color:#69675E}.tab-main strong em{color:#767368}.tab-arrow{color:var(--copper)}.index-foot{color:#777369}.index-foot b{color:var(--sage)}
+.stage-meta{background:#FAF8F2}.stage-meta .micro{color:var(--sage)}.stage-meta p{color:#65645A}.status{color:#56594E}.status i{background:var(--sage)}.note-link{color:#777369}.pill-link{background:#252521;color:#F6F1E8}.pill-link:hover{background:var(--sage);color:white}.media-disclosure{color:#706D63}
+.brand-section .section-top .micro{color:var(--sage)}.mark-panel{background:#E6E9DC;border-color:#ADB5A5}.mark-panel-top,.mark-panel-bottom{color:#5F675A}.mark-panel img{width:clamp(190px,22vw,305px);filter:none}.brand-copy p{color:#55564D}.brand-copy strong{color:var(--ink)}.swatches{grid-template-columns:repeat(4,1fr)}.swatch i{border-color:#B6B0A5}.swatch code,.palette-note{color:#68655C}
+.roadmap-section{background:#DCE2D4;border-color:#B3BBAA}.roadmap-inner p{color:#4B534B}.naming-list>div{border-color:#AAB4A4}.naming-list span{color:#4D6B52}.naming-list i{color:#8E9A8C}.naming-list small{color:#5A645B}
+.footer-inner{color:#66645B}.footer-inner>span:first-child{color:var(--ink)}
+a:focus-visible,button:focus-visible{outline-color:var(--sage)}
+@media(max-width:700px){.identity img{width:54px;height:44px}.product-tab.is-active{box-shadow:inset 0 3px 0 var(--sage)}.product-browser{box-shadow:7px 7px 0 rgba(118,108,91,.07)}.swatches{grid-template-columns:repeat(2,1fr)}}

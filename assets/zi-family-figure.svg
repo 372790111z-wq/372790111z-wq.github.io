@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 520" role="img" aria-labelledby="title desc">
+<title id="title">Zi product family line drawing</title><desc id="desc">Three shapes for a screen, a top-edge island and a menu bar, joined by one stem</desc>
+<g fill="none" stroke="#BAC5B2" stroke-width="1">
+<path d="M35 54h28M49 40v28M397 54h28M411 40v28M35 455h28M49 441v28M397 455h28M411 441v28"/>
+<circle cx="232" cy="214" r="156" stroke-dasharray="2 9"/><circle cx="232" cy="214" r="195" opacity=".4" stroke-dasharray="2 11"/>
+</g>
+<path d="M63 444C159 432 315 433 397 444" fill="none" stroke="#222720" stroke-width="3" stroke-linecap="round"/>
+<path d="M231 442C227 384 236 332 231 278M231 359C209 332 181 300 149 271M232 337C259 309 299 294 332 265" fill="none" stroke="#252A24" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="146" cy="216" r="65" fill="#E3E9DD" stroke="#65745D" stroke-width="2.4"/>
+<circle cx="231" cy="145" r="78" fill="#EDF1E9" stroke="#65745D" stroke-width="2.4"/>
+<circle cx="333" cy="217" r="64" fill="#E3E9DD" stroke="#65745D" stroke-width="2.4"/>
+<g fill="none" stroke="#2B302A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<rect x="111" y="195" width="70" height="42" rx="4"/><path d="M146 238v10m-23 0h46"/>
+<rect x="189" y="127" width="84" height="33" rx="17"/><circle cx="209" cy="143.5" r="5"/><path d="M224 142h29m-29 7h20"/>
+<rect x="298" y="199" width="72" height="26" rx="7"/><circle cx="313" cy="212" r="2.5" fill="#2B302A"/><circle cx="329" cy="212" r="2.5" fill="#2B302A"/><path d="M343 212h12"/>
+</g>
+<g font-family="ui-monospace, Menlo, monospace" font-size="10" font-weight="600" letter-spacing="2" fill="#64745D"><text x="109" y="165">01</text><text x="195" y="44">02</text><text x="353" y="167">03</text><text x="116" y="479">SPACE</text><text x="208" y="479">ISLAND</text><text x="321" y="479">LAN</text></g>
+<circle cx="84" cy="322" r="4" fill="#A66B4C"/><circle cx="382" cy="337" r="4" fill="#A66B4C"/>
+</svg>
