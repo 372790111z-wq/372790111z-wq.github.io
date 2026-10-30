@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="ZiSpace is a Mac video wallpaper project from Zi / 梓. Explore the concept and current development status.">
+  <title>ZiSpace · Video wallpaper for Mac</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/zispace-dock.svg">
+  <link rel="alternate" hreflang="en" href="zispace.html">
+  <link rel="alternate" hreflang="zh-CN" href="zispace-zh.html">
+  <link rel="stylesheet" href="assets/zispace.css">
+  <link rel="stylesheet" href="assets/warm-space.css">
+  <link rel="stylesheet" href="assets/zispace-brand-v12.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-head">
+    <div class="frame head-inner">
+      <a class="brand" href="index.html" aria-label="Back to the Zi family"><img src="assets/zi-wordmark.svg" alt=""></a>
+      <nav aria-label="Page navigation"><a href="#experience">Scenes</a><a href="#capabilities">Features</a><a href="#status">Status</a></nav>
+      <div class="space-actions"><a class="lang-switch" href="zispace-zh.html" lang="zh-CN" hreflang="zh-CN" aria-label="切换到简体中文">中文</a><a class="back-link" href="index.html">All products <span aria-hidden="true">↗</span></a></div>
+    </div>
+  </header>
+  <main id="main">
+    <section class="hero frame" aria-labelledby="hero-title">
+      <div class="hero-overline"><span class="accent-line"></span><span>ZI / PRODUCT 01</span><span class="hero-state">Local development</span></div>
+      <div class="hero-title-line"><h1 id="hero-title">ZiSpace<span class="dot">.</span></h1><img class="hero-logo" src="assets/icons/zispace-dock.svg" alt="ZiSpace app icon with layered spatial corners"></div>
+      <div class="hero-under"><p>Give your desktop<br>a moment of its own.</p><div><p>Live wallpaper, previews and playback that fit quietly into your Mac day.</p><a class="text-link" href="#experience">Watch the demo <span aria-hidden="true">↘</span></a></div></div>
+    </section>
+    <section class="experience frame" id="experience" aria-labelledby="experience-title">
+      <div class="showcase-top"><span>01 / A MOMENT ON YOUR DESKTOP</span><h2 id="experience-title">Let the scene speak first.</h2><div class="video-actions"><button id="toggle-play" type="button" aria-controls="demo-video">Pause video</button><button id="replay" type="button" aria-controls="demo-video">Replay ↻</button></div></div>
+      <div class="showcase">
+        <video id="demo-video" autoplay muted loop playsinline preload="metadata" poster="assets/zi-aurora.jpg" aria-label="Original eight-second blue and purple ZiSpace wallpaper demo">
+          <source src="assets/zi-aurora.mp4" type="video/mp4">
+          Your browser does not support video playback.
+        </video>
+        <div class="showcase-caption"><strong>Zi / Aurora</strong><span>Eight-second project demo · 960 × 540 · Not a release library</span></div>
+      </div>
+      <p class="media-note">An original eight-second project demo. It does not represent a release library.</p>
+    </section>
+    <section class="capabilities frame" id="capabilities" aria-labelledby="capabilities-title">
+      <div class="section-lead"><span class="eyebrow">02 / IN DEVELOPMENT</span><h2 id="capabilities-title">Make the desktop<br>your own.</h2><p>The Mac app is in local development. These are the capabilities being explored and tested.</p></div>
+      <div class="capability-list">
+        <article><span class="count">01</span><div><h3>Build your own library</h3><p>Import videos, preview thumbnails, and organize favorite scenes.</p></div></article>
+        <article><span class="count">02</span><div><h3>Choose per display</h3><p>Set a video for each display and adjust fill, sound and frame-rate limits.</p></div></article>
+        <article><span class="count">03</span><div><h3>Play to fit the moment</h3><p>Playlists, timed rotation and pause rules for battery or full-screen use.</p></div></article>
+      </div>
+    </section>
+    <section class="status" id="status" aria-labelledby="status-title"><div class="frame status-inner"><span class="eyebrow">03 / CURRENT STATE</span><div><h2 id="status-title">Still refining the experience.</h2><p>ZiSpace is currently suitable for local development and feature validation. Its library, previews and local playback have an initial working foundation. Signing, notarization, media rights and cross-device validation remain open.</p><a class="text-link" href="index.html#products">Back to the Zi family <span aria-hidden="true">↗</span></a></div></div></section>
+  </main>
+  <footer class="frame foot"><span>ZiSpace · A Zi / 梓 product</span><span>Development preview · No public download yet</span></footer>
+  <script>const demo=document.getElementById('demo-video');const toggle=document.getElementById('toggle-play');document.getElementById('replay').addEventListener('click',()=>{demo.currentTime=0;demo.play().catch(()=>{});toggle.textContent='Pause video';});toggle.addEventListener('click',()=>{if(demo.paused){demo.play().catch(()=>{});toggle.textContent='Pause video';}else{demo.pause();toggle.textContent='Play video';}});</script>
+</body>
+</html>
