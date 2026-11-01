@@ -1,4 +1,8 @@
 {
+  "redirects": [
+    { "source": "/zi", "destination": "https://zi.fuluoyide.top/", "permanent": true },
+    { "source": "/zi/:path*", "destination": "https://zi.fuluoyide.top/:path*", "permanent": true }
+  ],
   "rewrites": [
     {
       "source": "/work/:slug",
