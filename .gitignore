@@ -1,0 +1,6 @@
+.env*
+*fitness-config*
+private/*.html
+private/*.js
+private/*.css
+.vercel/

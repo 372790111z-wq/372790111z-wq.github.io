@@ -1,10 +1,26 @@
 {
   "redirects": [
-    { "source": "/zi", "destination": "https://zi.fuluoyide.top/", "permanent": true },
-    { "source": "/zi/", "destination": "https://zi.fuluoyide.top/", "permanent": true },
-    { "source": "/zi/:path*", "destination": "https://zi.fuluoyide.top/:path*", "permanent": true }
+    {
+      "source": "/zi",
+      "destination": "https://zi.fuluoyide.top/",
+      "permanent": true
+    },
+    {
+      "source": "/zi/",
+      "destination": "https://zi.fuluoyide.top/",
+      "permanent": true
+    },
+    {
+      "source": "/zi/:path*",
+      "destination": "https://zi.fuluoyide.top/:path*",
+      "permanent": true
+    }
   ],
   "rewrites": [
+    {
+      "source": "/private/:path*",
+      "destination": "/api/training"
+    },
     {
       "source": "/work/:slug",
       "destination": "/index.html"
@@ -24,6 +40,21 @@
     {
       "source": "/contact",
       "destination": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/private/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "private, no-store, max-age=0"
+        }
+      ]
     }
   ]
 }
