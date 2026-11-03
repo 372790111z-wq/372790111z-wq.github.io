@@ -8,7 +8,7 @@ if (!source || !configFile || !path.isAbsolute(source) || !path.isAbsolute(confi
 const config = JSON.parse(fs.readFileSync(configFile, 'utf8'));
 let html = fs.readFileSync(path.join(source, 'index.html'), 'utf8');
 html = html.replace('<link rel="stylesheet" href="./style.css">', () => `<style>${fs.readFileSync(path.join(source, 'style.css'), 'utf8')}</style>`);
-for (const file of ['exercise-library.js', 'app.js']) html = html.replace(`<script src="./${file}"></script>`, () => `<script>${fs.readFileSync(path.join(source, file), 'utf8').replace(/<\/script/gi, '<\\/script')}</script>`);
+for (const file of ['exercise-library.js', 'sync-client.js', 'app.js']) html = html.replace(`<script src="./${file}"></script>`, () => `<script>${fs.readFileSync(path.join(source, file), 'utf8').replace(/<\/script/gi, '<\\/script')}</script>`);
 const iv = randomBytes(12), cipher = createCipheriv('aes-256-gcm', Buffer.from(config.contentKey, 'base64'), iv);
 const data = Buffer.concat([cipher.update(html, 'utf8'), cipher.final()]);
 fs.mkdirSync(path.join(__dirname, '../private'), { recursive: true });

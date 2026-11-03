@@ -4,3 +4,4 @@ private/*.html
 private/*.js
 private/*.css
 .vercel/
+node_modules/
