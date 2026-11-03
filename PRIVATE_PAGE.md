@@ -23,7 +23,7 @@ synchronization service described below. Exports/imports remain available.
 
 ## Record synchronization (v4)
 
-`/api/training-sync` verifies the same signed cookie on every read/write and checks
+`/private/sync` (rewritten to `/api/training-sync`) verifies the same signed cookie on every read/write and checks
 same-origin JSON POST requests. The connected **private** Blob store is available
 via `BLOB_STORE_ID` and Vercel OIDC; no storage credential is sent to the browser.
 The document `fitness/state-v1.enc.json` is additionally AES-GCM encrypted with a

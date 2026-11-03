@@ -18,6 +18,10 @@
   ],
   "rewrites": [
     {
+      "source": "/private/sync",
+      "destination": "/api/training-sync"
+    },
+    {
       "source": "/private/:path*",
       "destination": "/api/training"
     },
