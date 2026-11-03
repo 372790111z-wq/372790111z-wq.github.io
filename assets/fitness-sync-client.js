@@ -5,7 +5,7 @@ const own=(o,k)=>Object.prototype.hasOwnProperty.call(o,k);
 const blank=()=>({schema:1,version:0,records:{},meals:{}});
 const equal=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
 class Client{
- constructor({storage,fetch,crypto,prefix='zhangCoach.sync.v1',url='/api/training-sync',onChange=()=>{},onStatus=()=>{}}){Object.assign(this,{storage,fetch,crypto,prefix,url,onChange,onStatus});this.ready=false;this.running=null;this.conflict=null;this.blocked=false;this.status='loading';}
+ constructor({storage,fetch,crypto,prefix='zhangCoach.sync.v1',url='/private/sync',onChange=()=>{},onStatus=()=>{}}){Object.assign(this,{storage,fetch,crypto,prefix,url,onChange,onStatus});this.ready=false;this.running=null;this.conflict=null;this.blocked=false;this.status='loading';}
  key(k){return this.prefix+'.'+k;}
  statusTo(status){let pending=0;try{pending=this.pending().length;}catch{status='storage-error';this.blocked=true;}this.status=status;this.onStatus({status,pending,conflict:this.conflict});}
  snapshot(){const s=JSON.parse(this.storage.getItem(this.key('cache'))||'null')||blank();if(s.schema!==1||!s.records||!s.meals||!Number.isInteger(s.version))throw Error('cache_invalid');return s;}
